@@ -20,7 +20,7 @@
 	"license": "GPL-3.0",
 	"author": {
 		"name": "Lifan Huang",
-		"email": "divinerapierh@gmail.com"
+		"email": "i@lifanh.com"
 	},
 	"scripts": {
 		"new": "tsx --loader esm-loader-yaml scripts/new.ts",

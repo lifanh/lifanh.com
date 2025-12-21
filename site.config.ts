@@ -5,7 +5,7 @@ const config = siteConfig({
 	prologue: "Welcome to my personal site.",
 	author: {
 		name: "Lifan",
-		email: "divinerapierh@gmail.com",
+		email: "i@lifanh.com",
 		link: "https://lifanh.com"
 	},
 	description: "Lifan's personal website and blog.",
