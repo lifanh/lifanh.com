@@ -1,29 +1,26 @@
 {
-	"name": "astro-theme-thought-lite",
+	"name": "lifanh-personal-site",
 	"type": "module",
 	"private": true,
 	"version": "0.30.11",
-	"description": "A modern Astro theme focused on content creation",
+	"description": "Lifan Huang's personal website",
 	"keywords": [
 		"astro",
-		"theme",
 		"blog",
-		"svelte",
-		"typescript",
-		"i18n"
+		"personal-site"
 	],
-	"homepage": "https://github.com/tuyuritio/astro-theme-thought-lite",
+	"homepage": "https://lifanh.com",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/tuyuritio/astro-theme-thought-lite.git"
+		"url": "https://github.com/lifanh/lifanh.com.git"
 	},
 	"bugs": {
-		"url": "https://github.com/tuyuritio/astro-theme-thought-lite/issues"
+		"url": "https://github.com/lifanh/lifanh.com/issues"
 	},
 	"license": "GPL-3.0",
 	"author": {
-		"name": "tuyuritio",
-		"url": "https://github.com/tuyuritio"
+		"name": "Lifan Huang",
+		"email": "i@lifanh.com"
 	},
 	"scripts": {
 		"new": "tsx --loader esm-loader-yaml scripts/new.ts",
