@@ -16,35 +16,35 @@ let initial = $state(false); // Track initial load to prevent unexpected effects
 let series: string | null = $state(null);
 let tags: string[] = $state([]);
 let filtered: any[] = $derived.by(() => {
-	let list: any[] = notes
-		// Apply series and tag filtering
-		.filter(note => {
-			// Check if note matches the specified series
-			let matchSeries = !series || note.data.series === series;
+  let list: any[] = notes
+    // Apply series and tag filtering
+    .filter(note => {
+      // Check if note matches the specified series
+      let matchSeries = !series || note.data.series === series;
 
-			// Check if note contains all specified tags
-			let matchTags = tags.every(tag => note.data.tags?.includes(tag));
+      // Check if note contains all specified tags
+      let matchTags = tags.every(tag => note.data.tags?.includes(tag));
 
-			return matchSeries && matchTags;
-		})
-		// Sort by timestamp (newest first)
-		.sort((a, b) => b.data.top - a.data.top || b.data.timestamp.getTime() - a.data.timestamp.getTime());
+      return matchSeries && matchTags;
+    })
+    // Sort by timestamp (newest first)
+    .sort((a, b) => b.data.top - a.data.top || b.data.timestamp.getTime() - a.data.timestamp.getTime());
 
-	if (!initial) return list;
+  if (!initial) return list;
 
-	// Build URL with current page, series, and tag filters using URLSearchParams
-	let params = new URLSearchParams();
+  // Build URL with current page, series, and tag filters using URLSearchParams
+  let params = new URLSearchParams();
 
-	params.set("page", String(page));
-	if (series) params.set("series", series);
-	for (const tag of tags) params.append("tag", tag);
+  params.set("page", String(page));
+  if (series) params.set("series", series);
+  for (const tag of tags) params.append("tag", tag);
 
-	let url = `${location.pathname}?${params.toString()}`;
+  let url = `${location.pathname}?${params.toString()}`;
 
-	// Match https://github.com/swup/swup/blob/main/src/helpers/history.ts#L22
-	window.history.replaceState({ url, random: Math.random(), source: "swup" }, "", url);
+  // Match https://github.com/swup/swup/blob/main/src/helpers/history.ts#L22
+  window.history.replaceState({ url, random: Math.random(), source: "swup" }, "", url);
 
-	return list;
+  return list;
 });
 
 // Calculate pagination
@@ -54,7 +54,7 @@ let pages: number = $derived(Math.ceil(filtered.length / size));
 // Ensure page is within valid range
 let page: number = $state(1);
 $effect(() => {
-	page = Math.max(1, Math.min(Math.floor(page), pages));
+  page = Math.max(1, Math.min(Math.floor(page), pages));
 });
 
 // Apply pagination by slicing the array
@@ -66,11 +66,11 @@ let list: any[] = $derived(filtered.slice((page - 1) * size, page * size));
  * @param turn whether to include or exclude the tag
  */
 function switchTag(tag: string, turn?: boolean) {
-	let included = tags.includes(tag);
-	if (turn === undefined) turn = !included;
+  let included = tags.includes(tag);
+  if (turn === undefined) turn = !included;
 
-	// Add tag if turning on and not included, or remove if turning off
-	tags = turn ? (included ? tags : [...tags, tag]) : tags.filter(item => item !== tag);
+  // Add tag if turning on and not included, or remove if turning off
+  tags = turn ? (included ? tags : [...tags, tag]) : tags.filter(item => item !== tag);
 }
 
 /**
@@ -79,19 +79,19 @@ function switchTag(tag: string, turn?: boolean) {
  * @param turn whether to include or exclude the series
  */
 function chooseSeries(seriesChoice: string, turn?: boolean) {
-	if (turn === undefined) turn = series !== seriesChoice;
-	// Set series if turning on, or clear if turning off
-	series = turn ? seriesChoice : null;
+  if (turn === undefined) turn = series !== seriesChoice;
+  // Set series if turning on, or clear if turning off
+  series = turn ? seriesChoice : null;
 }
 
 onMount(() => {
-	const params = new URLSearchParams(window.location.search);
+  const params = new URLSearchParams(window.location.search);
 
-	page = Number(params.get("page")) || 1;
-	series = params.get("series");
-	tags = params.getAll("tag");
+  page = Number(params.get("page")) || 1;
+  series = params.get("series");
+  tags = params.getAll("tag");
 
-	initial = true;
+  initial = true;
 });
 </script>
 

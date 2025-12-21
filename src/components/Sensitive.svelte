@@ -9,9 +9,9 @@ let { locale, sensitive = false, back, children }: { locale: string; sensitive: 
 const t = i18nit(locale);
 
 if (sensitive) {
-	$effect(() => {
-		if (!sensitive) window.zoom();
-	});
+  $effect(() => {
+    if (!sensitive) window.zoom();
+  });
 }
 </script>
 

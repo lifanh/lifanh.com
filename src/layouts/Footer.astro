@@ -14,84 +14,84 @@ let ccLabel: string;
 
 // Map Creative Commons license types to their official URLs and descriptions
 switch (copyright.type) {
-	case "CC BY 4.0":
-		ccURL = "https://creativecommons.org/licenses/by/4.0/";
-		ccLabel = "Attribution 4.0 International";
-		break;
+  case "CC BY 4.0":
+    ccURL = "https://creativecommons.org/licenses/by/4.0/";
+    ccLabel = "Attribution 4.0 International";
+    break;
 
-	case "CC BY-SA 4.0":
-		ccURL = "https://creativecommons.org/licenses/by-sa/4.0/";
-		ccLabel = "Attribution-ShareAlike 4.0 International";
-		break;
+  case "CC BY-SA 4.0":
+    ccURL = "https://creativecommons.org/licenses/by-sa/4.0/";
+    ccLabel = "Attribution-ShareAlike 4.0 International";
+    break;
 
-	case "CC BY-NC 4.0":
-		ccURL = "https://creativecommons.org/licenses/by-nc/4.0/";
-		ccLabel = "Creative Commons Attribution-NonCommercial 4.0 International";
-		break;
+  case "CC BY-NC 4.0":
+    ccURL = "https://creativecommons.org/licenses/by-nc/4.0/";
+    ccLabel = "Creative Commons Attribution-NonCommercial 4.0 International";
+    break;
 
-	case "CC BY-NC-SA 4.0":
-		ccURL = "https://creativecommons.org/licenses/by-nc-sa/4.0/";
-		ccLabel = "Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International";
-		break;
+  case "CC BY-NC-SA 4.0":
+    ccURL = "https://creativecommons.org/licenses/by-nc-sa/4.0/";
+    ccLabel = "Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International";
+    break;
 
-	case "CC BY-ND 4.0":
-		ccURL = "https://creativecommons.org/licenses/by-nd/4.0/";
-		ccLabel = "Creative Commons Attribution-NoDerivatives 4.0 International";
-		break;
+  case "CC BY-ND 4.0":
+    ccURL = "https://creativecommons.org/licenses/by-nd/4.0/";
+    ccLabel = "Creative Commons Attribution-NoDerivatives 4.0 International";
+    break;
 
-	case "CC BY-NC-ND 4.0":
-		ccURL = "https://creativecommons.org/licenses/by-nc-nd/4.0/";
-		ccLabel = "Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International";
-		break;
+  case "CC BY-NC-ND 4.0":
+    ccURL = "https://creativecommons.org/licenses/by-nc-nd/4.0/";
+    ccLabel = "Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International";
+    break;
 
-	default:
-		ccURL = "https://creativecommons.org/publicdomain/zero/1.0/";
-		ccLabel = "CC0 1.0 Universal";
-		break;
+  default:
+    ccURL = "https://creativecommons.org/publicdomain/zero/1.0/";
+    ccLabel = "CC0 1.0 Universal";
+    break;
 }
 
 // Build array of Creative Commons icons based on license type
 // Start with base CC icon, then add specific license component icons
 const ccIcons = ["fa6-brands--creative-commons"];
 if (copyright.type === "CC0 1.0") {
-	// CC0 uses a special "zero" icon
-	ccIcons.push("fa6-brands--creative-commons-zero");
+  // CC0 uses a special "zero" icon
+  ccIcons.push("fa6-brands--creative-commons-zero");
 } else {
-	// For other licenses, add icons based on license components
-	if (copyright.type.includes("BY")) ccIcons.push("fa6-brands--creative-commons-by"); // Attribution required
-	if (copyright.type.includes("NC")) ccIcons.push("fa6-brands--creative-commons-nc"); // Non-commercial
-	if (copyright.type.includes("SA")) ccIcons.push("fa6-brands--creative-commons-sa"); // Share-alike
-	if (copyright.type.includes("ND")) ccIcons.push("fa6-brands--creative-commons-nd"); // No derivatives
+  // For other licenses, add icons based on license components
+  if (copyright.type.includes("BY")) ccIcons.push("fa6-brands--creative-commons-by"); // Attribution required
+  if (copyright.type.includes("NC")) ccIcons.push("fa6-brands--creative-commons-nc"); // Non-commercial
+  if (copyright.type.includes("SA")) ccIcons.push("fa6-brands--creative-commons-sa"); // Share-alike
+  if (copyright.type.includes("ND")) ccIcons.push("fa6-brands--creative-commons-nd"); // No derivatives
 }
 
 // Fetch notes and jottings collections to calculate total word count
 
 const notes = await getCollection("note", note => {
-	// Filter by publication status and locale
-	let published = !note.data.draft;
-	let localed = monolocale || note.id.split("/")[0] === locale;
+  // Filter by publication status and locale
+  let published = !note.data.draft;
+  let localed = monolocale || note.id.split("/")[0] === locale;
 
-	return published && localed;
+  return published && localed;
 });
 
 // Calculate total word count across all notes
 const noteWords = (await Promise.all(notes.map(async note => (await render(note)).remarkPluginFrontmatter.words))).reduce(
-	(summary, words) => summary + words,
-	0
+  (summary, words) => summary + words,
+  0
 );
 
 const jottings = await getCollection("jotting", jotting => {
-	// Filter by publication status and locale
-	let published = !jotting.data.draft;
-	let localed = monolocale || jotting.id.split("/")[0] === locale;
+  // Filter by publication status and locale
+  let published = !jotting.data.draft;
+  let localed = monolocale || jotting.id.split("/")[0] === locale;
 
-	return published && localed;
+  return published && localed;
 });
 
 // Calculate total word count across all jottings
 const jottingWords = (await Promise.all(jottings.map(async jotting => (await render(jotting)).remarkPluginFrontmatter.words))).reduce(
-	(summary, words) => summary + words,
-	0
+  (summary, words) => summary + words,
+  0
 );
 
 // Aggregate total word count
