@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.31.0](https://github.com/lifanh/lifanh.com/compare/v0.30.11...v0.31.0) (2025-12-21)
+
+
+### Features
+
+* add AGENTS.md with Copilot instructions ([92e9be6](https://github.com/lifanh/lifanh.com/commit/92e9be6f63e720b22cd53a68a2a1ff155f835fcc))
+
 ## [0.30.11](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.30.10...v0.30.11) (2025-12-15)
 
 
