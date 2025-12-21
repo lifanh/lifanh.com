@@ -40,12 +40,12 @@
 Run the following command:
 
 ```sh
-pnpm create astro --template tuyuritio/astro-theme-thought-lite
+npm create astro --template tuyuritio/astro-theme-thought-lite
 
 # Follow the interactive prompts to create the project
 
 cd <your-project-name>
-pnpm dev
+npm run dev
 ```
 
 ### Using Template
@@ -56,8 +56,8 @@ pnpm dev
 ```sh
 git clone <your-repo-url>
 cd <your-repo-name>
-pnpm install
-pnpm dev
+npm install
+npm run dev
 ```
 
 ## 🔧 Configuration
@@ -78,15 +78,15 @@ The theme provides the following commonly used commands:
 
 | Command | Action |
 | --- | --- |
-| `pnpm install` | Install project dependencies |
-| `pnpm update` | Update project dependencies |
-| `pnpm new` | Create a new content file |
-| `pnpm dev` | Start the local development server (default: `http://localhost:4321`) |
-| `pnpm check` | Run Astro type checking |
-| `pnpm build` | Build the production version |
-| `pnpm preview` | Preview the built site |
-| `pnpm format` | Format code |
-| `pnpm lint` | Lint code |
+| `npm install` | Install project dependencies |
+| `npm update` | Update project dependencies |
+| `npm run new` | Create a new content file |
+| `npm run dev` | Start the local development server (default: `http://localhost:4321`) |
+| `npm run check` | Run Astro type checking |
+| `npm run build` | Build the production version |
+| `npm run preview` | Preview the built site |
+| `npm run format` | Format code |
+| `npm run lint` | Lint code |
 
 ## 🚀 Deployment
 
@@ -105,7 +105,7 @@ Run the following commands to sync upstream updates:
 git remote add theme https://github.com/tuyuritio/astro-theme-thought-lite.git
 git fetch theme
 git merge theme/main    # Add `--allow-unrelated-histories` flag for first update
-pnpm install
+npm install
 ```
 
 ## ✍️ Content Creation
