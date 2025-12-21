@@ -14,10 +14,10 @@ const t = i18nit(locale);
 // Define home route and navigation routes configuration
 const homeRoute = getRelativeLocaleUrl(locale);
 const routes: { path: string; extra?: string[]; icon: `${string}--${string}`; label: string }[] = [
-	{ label: t("navigation.home"), path: homeRoute, extra: [getRelativeLocaleUrl(locale, "/preface")], icon: "lucide--tent" },
-	{ label: t("navigation.note"), path: getRelativeLocaleUrl(locale, "/note"), icon: "lucide--list" },
-	{ label: t("navigation.jotting"), path: getRelativeLocaleUrl(locale, "/jotting"), icon: "lucide--feather" },
-	{ label: t("navigation.about"), path: getRelativeLocaleUrl(locale, "/about"), icon: "lucide--at-sign" }
+  { label: t("navigation.home"), path: homeRoute, extra: [getRelativeLocaleUrl(locale, "/preface")], icon: "lucide--tent" },
+  { label: t("navigation.note"), path: getRelativeLocaleUrl(locale, "/note"), icon: "lucide--list" },
+  { label: t("navigation.jotting"), path: getRelativeLocaleUrl(locale, "/jotting"), icon: "lucide--feather" },
+  { label: t("navigation.about"), path: getRelativeLocaleUrl(locale, "/about"), icon: "lucide--at-sign" }
 ];
 
 /**
@@ -29,9 +29,9 @@ const routes: { path: string; extra?: string[]; icon: `${string}--${string}`; la
  * @returns True if the route is active, false otherwise
  */
 function active(path: string, extra?: string[]) {
-	if (extra?.some(item => item === route)) return true;
-	if (path === homeRoute) return path === route;
-	return route.startsWith(path);
+  if (extra?.some(item => item === route)) return true;
+  if (path === homeRoute) return path === route;
+  return route.startsWith(path);
 }
 
 // Control mobile menu visibility state
@@ -42,20 +42,20 @@ let navigator: HTMLElement | undefined = $state();
 let path: string | undefined = $derived(route.slice(`/${locale === config.i18n.defaultLocale ? "" : locale}`.length) || undefined);
 
 onMount(() => {
-	// Close mobile menu when any navigation link is clicked
-	for (const link of navigator!.getElementsByTagName("a")) {
-		link.addEventListener("click", () => (menu = false));
-	}
+  // Close mobile menu when any navigation link is clicked
+  for (const link of navigator!.getElementsByTagName("a")) {
+    link.addEventListener("click", () => (menu = false));
+  }
 
-	// Set up route tracking for page navigation with Swup integration
-	const updateRoute = () => (route = window.location.pathname);
-	if (window.swup) {
-		// Register route update hook if Swup is already available
-		window.swup.hooks.on("page:load", updateRoute);
-	} else {
-		// Wait for Swup to be enabled and then register the hook
-		document.addEventListener("swup:enable", () => window.swup?.hooks.on("page:load", updateRoute));
-	}
+  // Set up route tracking for page navigation with Swup integration
+  const updateRoute = () => (route = window.location.pathname);
+  if (window.swup) {
+    // Register route update hook if Swup is already available
+    window.swup.hooks.on("page:load", updateRoute);
+  } else {
+    // Wait for Swup to be enabled and then register the hook
+    document.addEventListener("swup:enable", () => window.swup?.hooks.on("page:load", updateRoute));
+  }
 });
 </script>
 

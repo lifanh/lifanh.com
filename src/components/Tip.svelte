@@ -4,11 +4,11 @@ import Icon from "$components/Icon.svelte";
 
 /** Mapping of tip types to corresponding icon identifiers */
 const icons = {
-	information: "lucide--info",
-	success: "lucide--check-circle",
-	question: "lucide--help-circle",
-	warning: "lucide--alert-triangle",
-	error: "lucide--x-circle"
+  information: "lucide--info",
+  success: "lucide--check-circle",
+  question: "lucide--help-circle",
+  warning: "lucide--alert-triangle",
+  error: "lucide--x-circle"
 } as const;
 
 /** Type definition for a tip/notification object */
@@ -30,13 +30,13 @@ const Close = (tip: Tip) => tips.update(list => list.filter(item => (item !== ti
  * @param content - Text content to display in the notification
  */
 export function pushTip(type: keyof typeof icons, content: string): void {
-	const tip = { type, content };
+  const tip = { type, content };
 
-	// Add tip to the reactive store (triggers UI update)
-	tips.update(list => [...list, tip]);
+  // Add tip to the reactive store (triggers UI update)
+  tips.update(list => [...list, tip]);
 
-	// Auto-remove tip after 2.5 seconds for better UX
-	setTimeout(() => Close(tip), 2500);
+  // Auto-remove tip after 2.5 seconds for better UX
+  setTimeout(() => Close(tip), 2500);
 }
 </script>
 

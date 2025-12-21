@@ -14,26 +14,26 @@ const t = i18nit(locale);
 let initial = $state(false); // Track initial load to prevent unexpected effects
 let tags: string[] = $state([]);
 let filtered: any[] = $derived.by(() => {
-	let list: any[] = jottings
-		// Apply tag filtering
-		.filter(jotting => tags.every(tag => jotting.data.tags?.includes(tag)))
-		// Sort by timestamp (newest first)
-		.sort((a, b) => b.data.top - a.data.top || b.data.timestamp.getTime() - a.data.timestamp.getTime());
+  let list: any[] = jottings
+    // Apply tag filtering
+    .filter(jotting => tags.every(tag => jotting.data.tags?.includes(tag)))
+    // Sort by timestamp (newest first)
+    .sort((a, b) => b.data.top - a.data.top || b.data.timestamp.getTime() - a.data.timestamp.getTime());
 
-	if (!initial) return list;
+  if (!initial) return list;
 
-	// Build URL with current page and tag filters
-	let params = new URLSearchParams();
+  // Build URL with current page and tag filters
+  let params = new URLSearchParams();
 
-	params.set("page", String(page));
-	for (const tag of tags) params.append("tag", tag);
+  params.set("page", String(page));
+  for (const tag of tags) params.append("tag", tag);
 
-	let url = `${location.pathname}?${params.toString()}`;
+  let url = `${location.pathname}?${params.toString()}`;
 
-	// Match https://github.com/swup/swup/blob/main/src/helpers/history.ts#L22
-	window.history.replaceState({ url, random: Math.random(), source: "swup" }, "", url);
+  // Match https://github.com/swup/swup/blob/main/src/helpers/history.ts#L22
+  window.history.replaceState({ url, random: Math.random(), source: "swup" }, "", url);
 
-	return list;
+  return list;
 });
 
 // Calculate pagination
@@ -43,7 +43,7 @@ let pages: number = $derived(Math.ceil(filtered.length / size));
 // Ensure page is within valid range
 let page: number = $state(1);
 $effect(() => {
-	page = Math.max(1, Math.min(Math.floor(page), pages));
+  page = Math.max(1, Math.min(Math.floor(page), pages));
 });
 
 // Apply pagination by slicing the array
@@ -55,20 +55,20 @@ let list: any[] = $derived(filtered.slice((page - 1) * size, page * size));
  * @param turn whether to include or exclude the tag
  */
 function switchTag(tag: string, turn?: boolean) {
-	let included = tags.includes(tag);
-	if (turn === undefined) turn = !included;
+  let included = tags.includes(tag);
+  if (turn === undefined) turn = !included;
 
-	// Add tag if turning on and not included, or remove if turning off
-	tags = turn ? (included ? tags : [...tags, tag]) : tags.filter(item => item !== tag);
+  // Add tag if turning on and not included, or remove if turning off
+  tags = turn ? (included ? tags : [...tags, tag]) : tags.filter(item => item !== tag);
 }
 
 onMount(() => {
-	const params = new URLSearchParams(window.location.search);
+  const params = new URLSearchParams(window.location.search);
 
-	page = Number(params.get("page")) || 1;
-	tags = params.getAll("tag");
+  page = Number(params.get("page")) || 1;
+  tags = params.getAll("tag");
 
-	initial = true;
+  initial = true;
 });
 </script>
 

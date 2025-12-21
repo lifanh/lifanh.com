@@ -9,8 +9,8 @@ import Logo from "$icons/site-logo.svg";
 import i18nit from "$i18n";
 
 export async function getStaticPaths() {
-	// Create path for each locale, omitting default locale from URL
-	return config.i18n.locales.map(locale => ({ params: { locale: config.i18n.defaultLocale === locale ? undefined : locale } }));
+  // Create path for each locale, omitting default locale from URL
+  return config.i18n.locales.map(locale => ({ params: { locale: config.i18n.defaultLocale === locale ? undefined : locale } }));
 }
 
 const { locale = config.i18n.defaultLocale } = Astro.params;
@@ -19,42 +19,42 @@ const t = i18nit(locale);
 
 // Get preface content for current locale, sorted by timestamp (latest first)
 const prefaces = (
-	await getCollection("preface", preface => {
-		// Handle single locale setup
-		if (monolocale) return true;
+  await getCollection("preface", preface => {
+    // Handle single locale setup
+    if (monolocale) return true;
 
-		// Extract language and ID from file path structure
-		const [language, id] = preface.id.split("/");
-		preface.id = id;
+    // Extract language and ID from file path structure
+    const [language, id] = preface.id.split("/");
+    preface.id = id;
 
-		// Filter by current locale
-		return language === locale;
-	})
+    // Filter by current locale
+    return language === locale;
+  })
 ).sort((a, b) => b.data.timestamp.getTime() - a.data.timestamp.getTime());
 
 // Get published notes for current locale
 const notes = await getCollection("note", note => {
-	// Assign type property
-	Reflect.set(note, "type", "note");
+  // Assign type property
+  Reflect.set(note, "type", "note");
 
-	// Filter by publication status and locale
-	let published = !note.data.draft;
-	let localed = monolocale || note.id.split("/")[0] === locale;
+  // Filter by publication status and locale
+  let published = !note.data.draft;
+  let localed = monolocale || note.id.split("/")[0] === locale;
 
-	// Filter published notes by current locale
-	return published && localed;
+  // Filter published notes by current locale
+  return published && localed;
 });
 
 // Get published jottings for current locale
 const jottings = await getCollection("jotting", jotting => {
-	// Assign type property
-	Reflect.set(jotting, "type", "jotting");
+  // Assign type property
+  Reflect.set(jotting, "type", "jotting");
 
-	// Check monolocale setup or extract language to match locale
-	let localed = monolocale || jotting.id.split("/")[0] === locale;
+  // Check monolocale setup or extract language to match locale
+  let localed = monolocale || jotting.id.split("/")[0] === locale;
 
-	// Filter published notes by current locale
-	return !jotting.data.draft && localed;
+  // Filter published notes by current locale
+  return !jotting.data.draft && localed;
 });
 
 // Combine contents

@@ -11,21 +11,21 @@ import jaLinkroll from "./ja/linkroll.yaml";
 
 // Translation object mapping locale codes to their respective translation data
 const translations = {
-	en: {
-		...en,
-		script: enScript,
-		linkroll: enLinkroll
-	},
-	"zh-cn": {
-		...zhCN,
-		script: zhCNScript,
-		linkroll: zhLinkroll
-	},
-	ja: {
-		...ja,
-		script: jaScript,
-		linkroll: jaLinkroll
-	}
+  en: {
+    ...en,
+    script: enScript,
+    linkroll: enLinkroll
+  },
+  "zh-cn": {
+    ...zhCN,
+    script: zhCNScript,
+    linkroll: zhLinkroll
+  },
+  ja: {
+    ...ja,
+    script: jaScript,
+    linkroll: jaLinkroll
+  }
 };
 
 // Define Language type based on available translations
@@ -40,7 +40,7 @@ export type TranslationNamespace = keyof (typeof translations)[Language];
  * @throws Error if the language is not supported
  */
 function validateLanguage(language: string): asserts language is Language {
-	if (!Object.keys(translations).includes(language)) throw new Error(`Unsupported language: ${language}`);
+  if (!Object.keys(translations).includes(language)) throw new Error(`Unsupported language: ${language}`);
 }
 
 /**
@@ -50,28 +50,28 @@ function validateLanguage(language: string): asserts language is Language {
  * @returns Translation function that can translate keys with parameter substitution
  */
 export default function i18nit(
-	language: string,
-	namespace?: TranslationNamespace
+  language: string,
+  namespace?: TranslationNamespace
 ): (key: string, params?: Record<string, string | number>) => string {
-	// Ensure the provided language is valid
-	validateLanguage(language);
+  // Ensure the provided language is valid
+  validateLanguage(language);
 
-	let translation: Record<string, any> = translations[language];
-	if (namespace) translation = translation[namespace];
+  let translation: Record<string, any> = translations[language];
+  if (namespace) translation = translation[namespace];
 
-	/**
-	 * Main translation function with parameter interpolation
-	 * Navigates through nested translation object using dot notation and supports parameter substitution
-	 * @param key - Dot-separated key path to look up translation (e.g., "notification.reply.title")
-	 * @param params - Optional parameters for string interpolation (replaces {paramName} placeholders)
-	 * @returns Translated and interpolated string, or the original key if translation not found
-	 */
-	function t(key: string, params?: Record<string, string | number>) {
-		const keys = key.split(".");
-		const value: string | undefined = keys.reduce((translation: any, key) => translation[key], translation);
+  /**
+   * Main translation function with parameter interpolation
+   * Navigates through nested translation object using dot notation and supports parameter substitution
+   * @param key - Dot-separated key path to look up translation (e.g., "notification.reply.title")
+   * @param params - Optional parameters for string interpolation (replaces {paramName} placeholders)
+   * @returns Translated and interpolated string, or the original key if translation not found
+   */
+  function t(key: string, params?: Record<string, string | number>) {
+    const keys = key.split(".");
+    const value: string | undefined = keys.reduce((translation: any, key) => translation[key], translation);
 
-		return value?.replace(/\{(\w+)\}/g, (_, param) => String(params?.[param] ?? param)) ?? key;
-	}
+    return value?.replace(/\{(\w+)\}/g, (_, param) => String(params?.[param] ?? param)) ?? key;
+  }
 
-	return t;
+  return t;
 }

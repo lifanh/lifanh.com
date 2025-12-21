@@ -28,29 +28,29 @@ import { h } from "hastscript";
  * - The paragraph must be at the root level (no parent or parent is root)
  */
 const rehypeFigure: Plugin<[], Root> = () => {
-	return (tree: Root) => {
-		// Visit all element nodes in the HTML AST
-		visit(tree, "element", (node, _index, parent) => {
-			// Check if this is a paragraph with a single image child at root level
-			if (
-				node.tagName === "p" &&
-				node.children.length === 1 &&
-				node.children[0].type === "element" &&
-				node.children[0].tagName === "img" &&
-				(!parent || parent.type === "root")
-			) {
-				const child = node.children[0];
-				// Ensure the image has both src and alt attributes
-				if (child.properties.src && child.properties.alt) {
-					// Transform the paragraph into a figure element
-					node.tagName = "figure";
+  return (tree: Root) => {
+    // Visit all element nodes in the HTML AST
+    visit(tree, "element", (node, _index, parent) => {
+      // Check if this is a paragraph with a single image child at root level
+      if (
+        node.tagName === "p" &&
+        node.children.length === 1 &&
+        node.children[0].type === "element" &&
+        node.children[0].tagName === "img" &&
+        (!parent || parent.type === "root")
+      ) {
+        const child = node.children[0];
+        // Ensure the image has both src and alt attributes
+        if (child.properties.src && child.properties.alt) {
+          // Transform the paragraph into a figure element
+          node.tagName = "figure";
 
-					// Create new children: img element and figcaption with alt text
-					node.children = [h("img", { ...child.properties }), h("figcaption", String(child.properties.alt))];
-				}
-			}
-		});
-	};
+          // Create new children: img element and figcaption with alt text
+          node.children = [h("img", { ...child.properties }), h("figcaption", String(child.properties.alt))];
+        }
+      }
+    });
+  };
 };
 
 export default rehypeFigure;

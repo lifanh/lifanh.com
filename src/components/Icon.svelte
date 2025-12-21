@@ -1,16 +1,16 @@
 <script lang="ts">
 interface Props {
-	/** Icon name/identifier (required) - corresponds to icon file or icon set key */
-	name: `${string}--${string}`;
+  /** Icon name/identifier (required) - corresponds to icon file or icon set key */
+  name: `${string}--${string}`;
 
-	/** Icon size in pixels or CSS units (optional) - controls width/height */
-	size?: number | string;
+  /** Icon size in pixels or CSS units (optional) - controls width/height */
+  size?: number | string;
 
-	/** Tooltip text to display on hover (optional) - enhances accessibility */
-	title?: string;
+  /** Tooltip text to display on hover (optional) - enhances accessibility */
+  title?: string;
 
-	/** Additional CSS classes for custom styling (optional) */
-	class?: string;
+  /** Additional CSS classes for custom styling (optional) */
+  class?: string;
 }
 
 let { name, size, title, class: className }: Props = $props();

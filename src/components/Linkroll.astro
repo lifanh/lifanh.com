@@ -3,26 +3,26 @@ import i18nit from "$i18n";
 import Icon from "$components/Icon.svelte";
 
 interface Props {
-	/** Current locale/language code */
-	locale: string;
+  /** Current locale/language code */
+  locale: string;
 
-	/** Array of link items to display in the linkroll */
-	links: Array<{
-		/** Display title of the link */
-		title: string;
+  /** Array of link items to display in the linkroll */
+  links: Array<{
+    /** Display title of the link */
+    title: string;
 
-		/** Target URL of the link */
-		url: string;
+    /** Target URL of the link */
+    url: string;
 
-		/** Category type of the link */
-		type: keyof typeof types;
+    /** Category type of the link */
+    type: keyof typeof types;
 
-		/** Optional image URL for the link avatar */
-		image?: string;
+    /** Optional image URL for the link avatar */
+    image?: string;
 
-		/** Optional description text for the link */
-		description?: string;
-	}>;
+    /** Optional description text for the link */
+    description?: string;
+  }>;
 }
 
 const { locale, links } = Astro.props;
@@ -30,14 +30,14 @@ const { locale, links } = Astro.props;
 const t = i18nit(locale, "linkroll");
 
 const types = {
-	resources: { name: t("type.resources"), icon: "lucide--tool-case" },
-	community: { name: t("type.community"), icon: "lucide--network" },
-	insights: { name: t("type.insights"), icon: "lucide--lightbulb" },
-	technology: { name: t("type.technology"), icon: "lucide--terminal" },
-	expertise: { name: t("type.expertise"), icon: "lucide--book-open-text" },
-	creative: { name: t("type.creative"), icon: "lucide--palette" },
-	lifestyle: { name: t("type.lifestyle"), icon: "lucide--coffee" },
-	general: { name: t("type.general"), icon: "lucide--box" }
+  resources: { name: t("type.resources"), icon: "lucide--tool-case" },
+  community: { name: t("type.community"), icon: "lucide--network" },
+  insights: { name: t("type.insights"), icon: "lucide--lightbulb" },
+  technology: { name: t("type.technology"), icon: "lucide--terminal" },
+  expertise: { name: t("type.expertise"), icon: "lucide--book-open-text" },
+  creative: { name: t("type.creative"), icon: "lucide--palette" },
+  lifestyle: { name: t("type.lifestyle"), icon: "lucide--coffee" },
+  general: { name: t("type.general"), icon: "lucide--box" }
 };
 
 const fallback = "/linkback.webp";

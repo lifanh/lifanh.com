@@ -18,31 +18,31 @@ import type { Plugin } from "unified";
  *         </div>
  */
 const remarkTableWrapper: Plugin<[], Root> = () => {
-	return (tree: Root) => {
-		visit(tree, "table", (node: Table, index, parent) => {
-			if (!parent || typeof index !== "number") {
-				return;
-			}
+  return (tree: Root) => {
+    visit(tree, "table", (node: Table, index, parent) => {
+      if (!parent || typeof index !== "number") {
+        return;
+      }
 
-			// Create a wrapper div node with the table-wrapper class
-			const wrapper: Html = {
-				type: "html",
-				value: '<div class="table-wrapper">'
-			};
+      // Create a wrapper div node with the table-wrapper class
+      const wrapper: Html = {
+        type: "html",
+        value: '<div class="table-wrapper">'
+      };
 
-			// Create a closing div node
-			const closingWrapper: Html = {
-				type: "html",
-				value: "</div>"
-			};
+      // Create a closing div node
+      const closingWrapper: Html = {
+        type: "html",
+        value: "</div>"
+      };
 
-			// Replace the table with the wrapper, table, and closing wrapper
-			parent.children.splice(index, 1, wrapper, node, closingWrapper);
+      // Replace the table with the wrapper, table, and closing wrapper
+      parent.children.splice(index, 1, wrapper, node, closingWrapper);
 
-			// Skip the newly inserted nodes to avoid infinite loops
-			return index + 3;
-		});
-	};
+      // Skip the newly inserted nodes to avoid infinite loops
+      return index + 3;
+    });
+  };
 };
 
 export default remarkTableWrapper;

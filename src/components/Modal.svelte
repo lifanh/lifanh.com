@@ -4,15 +4,15 @@ import { fade } from "svelte/transition";
 let dialog: HTMLDialogElement | null = $state(null);
 
 interface Props {
-	open: any; // Controls modal visibility (bindable)
-	children?: import("svelte").Snippet; // Optional content to render inside modal
+  open: any; // Controls modal visibility (bindable)
+  children?: import("svelte").Snippet; // Optional content to render inside modal
 }
 
 let { open = $bindable(), children }: Props = $props();
 
 // Reactive effect to show modal when open becomes true
 $effect(() => {
-	if (open) dialog?.showModal(); // Call native showModal() API when opened
+  if (open) dialog?.showModal(); // Call native showModal() API when opened
 });
 </script>
 
