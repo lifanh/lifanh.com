@@ -1,0 +1,11 @@
+{
+  "description": "Design tokens for lifanh.com",
+  "source": [
+    "src/tokens/colors.json",
+    "src/tokens/typography.json",
+    "src/tokens/spacing.json",
+    "src/tokens/radius.json",
+    "src/tokens/shadows.json",
+    "src/tokens/motion.json"
+  ]
+}

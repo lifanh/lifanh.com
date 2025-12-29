@@ -24,9 +24,11 @@
 	},
 	"scripts": {
 		"new": "tsx --loader esm-loader-yaml scripts/new.ts",
-		"dev": "astro dev",
+		"tokens:build": "style-dictionary build --config style-dictionary.config.mjs",
+		"tokens:watch": "style-dictionary build --config style-dictionary.config.mjs --watch",
+		"dev": "npm run tokens:build && astro dev",
 		"check": "astro check",
-		"build": "astro build",
+		"build": "npm run tokens:build && astro build",
 		"preview": "astro preview",
 		"format": "biome format --write",
 		"lint": "biome lint",
@@ -102,6 +104,7 @@
 		"prettier-plugin-svelte": "^3.4.1",
 		"satori": "^0.18.3",
 		"sharp": "^0.34.5",
+		"style-dictionary": "^4.4.0",
 		"tsx": "^4.21.0"
 	},
 	"lint-staged": {

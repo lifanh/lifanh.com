@@ -81,12 +81,20 @@ The theme provides the following commonly used commands:
 | `npm install` | Install project dependencies |
 | `npm update` | Update project dependencies |
 | `npm run new` | Create a new content file |
+| `npm run tokens:build` | Build design tokens from JSON to CSS |
+| `npm run tokens:watch` | Watch for token changes and rebuild |
 | `npm run dev` | Start the local development server (default: `http://localhost:4321`) |
 | `npm run check` | Run Astro type checking |
 | `npm run build` | Build the production version |
 | `npm run preview` | Preview the built site |
 | `npm run format` | Format code |
 | `npm run lint` | Lint code |
+
+## 🎨 Design Tokens
+
+This project uses a centralized design token system powered by Style Dictionary. Tokens provide consistent design values for colors, spacing, typography, and more.
+
+For detailed documentation on working with design tokens, see [TOKENS.md](TOKENS.md).
 
 ## 🚀 Deployment
 
