@@ -1,4 +1,6 @@
-# ThoughtLite
+# WIP...
+
+# The README of Template ThoughtLite
 
 <div align="center">
     <p>
