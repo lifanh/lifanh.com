@@ -6,13 +6,11 @@ import i18nit from "$i18n";
 
 let { locale, sensitive = false, back, children }: { locale: string; sensitive: boolean; back: string; children: Snippet } = $props();
 
-const t = i18nit(locale);
+const t = $derived(i18nit(locale));
 
-if (sensitive) {
-  $effect(() => {
-    if (!sensitive) window.zoom();
-  });
-}
+$effect(() => {
+  if (!sensitive) window.zoom();
+});
 </script>
 
 {#if sensitive}
