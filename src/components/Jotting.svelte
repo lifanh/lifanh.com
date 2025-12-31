@@ -9,7 +9,7 @@ import i18nit from "$i18n";
 
 let { locale, jottings, tags: tagList }: { locale: string; jottings: any[]; tags: string[] } = $props();
 
-const t = i18nit(locale);
+const t = $derived(i18nit(locale));
 
 let initial = $state(false); // Track initial load to prevent unexpected effects
 let tags: string[] = $state([]);

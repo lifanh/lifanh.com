@@ -9,16 +9,19 @@ import Menu from "./Menu.svelte";
 
 let { locale, route }: { locale: string; route: string } = $props();
 
-const t = i18nit(locale);
+const t = $derived(i18nit(locale));
 
 // Define home route and navigation routes configuration
-const homeRoute = getRelativeLocaleUrl(locale);
-const routes: { path: string; extra?: string[]; icon: `${string}--${string}`; label: string }[] = [
-  { label: t("navigation.home"), path: homeRoute, extra: [getRelativeLocaleUrl(locale, "/preface")], icon: "lucide--tent" },
-  { label: t("navigation.note"), path: getRelativeLocaleUrl(locale, "/note"), icon: "lucide--list" },
-  { label: t("navigation.jotting"), path: getRelativeLocaleUrl(locale, "/jotting"), icon: "lucide--feather" },
-  { label: t("navigation.about"), path: getRelativeLocaleUrl(locale, "/about"), icon: "lucide--at-sign" }
-];
+const homeRoute = $derived(getRelativeLocaleUrl(locale));
+const routes = $derived.by(() => {
+  const home = getRelativeLocaleUrl(locale);
+  return [
+    { label: t("navigation.home"), path: home, extra: [getRelativeLocaleUrl(locale, "/preface")], icon: "lucide--tent" as const },
+    { label: t("navigation.note"), path: getRelativeLocaleUrl(locale, "/note"), icon: "lucide--list" as const },
+    { label: t("navigation.jotting"), path: getRelativeLocaleUrl(locale, "/jotting"), icon: "lucide--feather" as const },
+    { label: t("navigation.about"), path: getRelativeLocaleUrl(locale, "/about"), icon: "lucide--at-sign" as const }
+  ];
+});
 
 /**
  * Check if a route is currently active based on the current route path

@@ -1,15 +1,15 @@
 {
   "font": {
     "serif": {
-      "value": "\"Noto Serif\", serif",
+      "value": "Noto Serif, serif",
       "type": "fontFamily"
     },
     "monospace": {
-      "value": "\"Maple Mono NF CN\", monospace",
+      "value": "Maple Mono NF CN, monospace",
       "type": "fontFamily"
     },
     "cursive": {
-      "value": "\"Playwrite MX\", \"The Peak Font Plus\", serif",
+      "value": "Playwrite MX, The Peak Font Plus, serif",
       "type": "fontFamily"
     }
   }
