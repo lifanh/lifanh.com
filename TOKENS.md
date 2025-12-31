@@ -130,6 +130,7 @@ Edit `src/tokens/spacing.json`:
 {
   "spacing": {
     "xs": { "value": "4px", "type": "spacing" },
+    // ... existing tokens (sm, md, lg, xl, 2xl, 3xl) ...
     "4xl": { "value": "96px", "type": "spacing" }  // Add this line
   }
 }
@@ -191,8 +192,8 @@ This generates:
 ### NPM Scripts
 
 - `npm run tokens:build` - Build tokens from JSON to CSS
-- `npm run tokens:watch` - Watch for token changes and rebuild (optional)
-- `npm run dev` - Includes token build before starting dev server
+- `npm run tokens:watch` - Watch for token changes and rebuild automatically
+- `npm run dev` - Builds tokens once, then runs token watch and dev server in parallel
 - `npm run build` - Includes token build before production build
 
 ### Generated Files

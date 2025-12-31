@@ -21,40 +21,6 @@
   --font-mono: var(--font-monospace);
   --font-cursive: var(--font-cursive);
 
-  /* Spacing tokens */
-  --spacing-xs: var(--spacing-xs);
-  --spacing-sm: var(--spacing-sm);
-  --spacing-md: var(--spacing-md);
-  --spacing-lg: var(--spacing-lg);
-  --spacing-xl: var(--spacing-xl);
-  --spacing-2xl: var(--spacing-2xl);
-  --spacing-3xl: var(--spacing-3xl);
-
-  /* Border radius tokens */
-  --radius-none: var(--radius-none);
-  --radius-sm: var(--radius-sm);
-  --radius-md: var(--radius-md);
-  --radius-lg: var(--radius-lg);
-  --radius-xl: var(--radius-xl);
-  --radius-full: var(--radius-full);
-
-  /* Shadow tokens */
-  --box-shadow-sm: var(--shadow-sm);
-  --box-shadow-md: var(--shadow-md);
-  --box-shadow-lg: var(--shadow-lg);
-  --box-shadow-xl: var(--shadow-xl);
-
-  /* Duration tokens */
-  --transition-duration-fast: var(--duration-fast);
-  --transition-duration-normal: var(--duration-normal);
-  --transition-duration-slow: var(--duration-slow);
-  --transition-duration-slower: var(--duration-slower);
-
-  /* Easing tokens */
-  --transition-timing-function-in: var(--ease-in);
-  --transition-timing-function-out: var(--ease-out);
-  --transition-timing-function-in-out: var(--ease-in-out);
-
   /* Animation keyframes */
   @keyframes shaky {
     0% {

@@ -82,8 +82,8 @@ The theme provides the following commonly used commands:
 | `npm update` | Update project dependencies |
 | `npm run new` | Create a new content file |
 | `npm run tokens:build` | Build design tokens from JSON to CSS |
-| `npm run tokens:watch` | Watch for token changes and rebuild |
-| `npm run dev` | Start the local development server (default: `http://localhost:4321`) |
+| `npm run tokens:watch` | Watch for token changes and rebuild automatically |
+| `npm run dev` | Start dev server with automatic token rebuilding |
 | `npm run check` | Run Astro type checking |
 | `npm run build` | Build the production version |
 | `npm run preview` | Preview the built site |
