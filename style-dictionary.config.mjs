@@ -38,6 +38,7 @@ StyleDictionary.registerFormat({
     // Helper function to generate color variable assignments
     const generateColorAssignments = (suffix, indent = "  ") => {
       return Array.from(colorNames)
+        .sort()
         .map(name => `${indent}--${name}-color: var(--${name}-color-${suffix});`)
         .join("\n");
     };
