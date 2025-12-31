@@ -20,14 +20,11 @@ const t = i18nit(locale);
 // Get preface content for current locale, sorted by timestamp (latest first)
 const prefaces = (
   await getCollection("preface", preface => {
-    // Handle single locale setup
-    if (monolocale) return true;
-
     // Extract language and ID from file path structure
     const [language, id] = preface.id.split("/");
     preface.id = id;
 
-    // Filter by current locale
+    // Filter by current locale (use default locale for monolocale setup)
     return language === locale;
   })
 ).sort((a, b) => b.data.timestamp.getTime() - a.data.timestamp.getTime());
