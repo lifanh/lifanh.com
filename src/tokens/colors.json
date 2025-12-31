@@ -1,0 +1,72 @@
+{
+  "color": {
+    "light": {
+      "primary": {
+        "value": "#2a2a28",
+        "type": "color"
+      },
+      "secondary": {
+        "value": "#50504d",
+        "type": "color"
+      },
+      "remark": {
+        "value": "#757575",
+        "type": "color"
+      },
+      "weak": {
+        "value": "#9f9f9c",
+        "type": "color"
+      },
+      "background": {
+        "value": "#fffffd",
+        "type": "color"
+      },
+      "block": {
+        "value": "#eeeeee",
+        "type": "color"
+      },
+      "shadow": {
+        "value": "#cdcdcc",
+        "type": "color"
+      },
+      "selection": {
+        "value": "#adadacc3",
+        "type": "color"
+      }
+    },
+    "dark": {
+      "primary": {
+        "value": "#dddddb",
+        "type": "color"
+      },
+      "secondary": {
+        "value": "#aaaaa8",
+        "type": "color"
+      },
+      "remark": {
+        "value": "#a5a5a5",
+        "type": "color"
+      },
+      "weak": {
+        "value": "#5d5d5a",
+        "type": "color"
+      },
+      "background": {
+        "value": "#0e0e0c",
+        "type": "color"
+      },
+      "block": {
+        "value": "#1e1e1e",
+        "type": "color"
+      },
+      "shadow": {
+        "value": "#323231",
+        "type": "color"
+      },
+      "selection": {
+        "value": "#adadacc3",
+        "type": "color"
+      }
+    }
+  }
+}

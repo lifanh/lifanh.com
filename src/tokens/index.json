@@ -1,0 +1,12 @@
+{
+  "$schema": "https://tr.designtokens.org/format/",
+  "description": "Design tokens for lifanh.com. This file serves as documentation of available token categories. The actual build process uses a glob pattern in style-dictionary.config.mjs.",
+  "source": [
+    "src/tokens/colors.json",
+    "src/tokens/typography.json",
+    "src/tokens/spacing.json",
+    "src/tokens/radius.json",
+    "src/tokens/shadows.json",
+    "src/tokens/motion.json"
+  ]
+}

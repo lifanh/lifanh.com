@@ -3,6 +3,9 @@
 .vercel/
 dist/
 
+# generated files
+src/styles/tokens.css
+
 # generated types
 .astro/
 .vscode/count
