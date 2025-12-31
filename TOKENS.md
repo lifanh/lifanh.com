@@ -198,7 +198,7 @@ This generates:
 ### Generated Files
 
 The build process generates:
-- `src/styles/tokens.css` - CSS custom properties (auto-generated, in `.gitignore`)
+- `src/styles/tokens.css` - CSS custom properties (auto-generated, not tracked in git)
 
 **Note**: `tokens.css` is generated and should not be edited manually. Edit the source JSON files instead.
 
