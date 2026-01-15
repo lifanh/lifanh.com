@@ -75,7 +75,7 @@
 		"remark-math": "^6.0.0",
 		"remark-ruby-directive": "^0.3.0",
 		"shiki": "^3.20.0",
-		"svelte": "^5.46.0",
+		"svelte": "^5.46.4",
 		"tailwindcss": "^4.1.18",
 		"typescript": "^5.9.3",
 		"unified": "^11.0.5",
