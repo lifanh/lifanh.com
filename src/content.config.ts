@@ -6,7 +6,7 @@ import { defineCollection, z } from "astro:content";
  * Represents main blog articles with comprehensive metadata
  */
 const note = defineCollection({
-  // Load all markdown and MDX files except those starting with underscore (private/draft files)
+  // Load all markdown files except those starting with underscore (private/draft files)
   loader: glob({ pattern: ["**/*.{md,mdx}", "!**/_*.{md,mdx}", "!**/_*/*.{md,mdx}"], base: "./src/content/note" }),
   schema: z.object({
     title: z.string(), // Post title (required)

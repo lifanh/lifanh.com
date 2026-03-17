@@ -1,7 +1,6 @@
 @import "tailwindcss";
 
 @plugin "@iconify/tailwind4" {
-  /* biome-ignore lint/correctness/noUnknownProperty: https://iconify.design/docs/usage/css/tailwind/tailwind4/#clean-selectors */
   prefixes: lucide, simple-icons, fa6-brands;
 }
 
@@ -17,9 +16,9 @@
   --color-selection: var(--selection-color);
 
   /* Font families */
-  --font-serif: var(--font-serif);
-  --font-mono: var(--font-monospace);
-  --font-cursive: var(--font-cursive);
+  --font-serif: var(--font-noto-serif);
+  --font-mono: var(--font-maple-mono-nf-cn);
+  --font-cursive: var(--font-playwrite-mx), var(--font-the-peak-font-plus);
 
   /* Animation keyframes */
   @keyframes shaky {
@@ -61,6 +60,12 @@
   --animate-shaky: shaky 0.6s infinite;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --animate-shaky: none;
+  }
+}
+
 @layer components {
   .link {
     @apply underline decoration-transparent decoration-[0.05em] underline-offset-[0.15em] transition-[text-decoration-color] hover:decoration-current;
@@ -75,22 +80,22 @@
   }
 
   .pop {
-    @apply opacity-0 invisible z-1 transition-[opacity,visibility] group-hover/pop:opacity-100 group-hover/pop:visible;
+    @apply opacity-0 invisible z-2000 transition-[opacity,visibility] group-hover/pop:opacity-100 group-hover/pop:visible;
   }
 }
 
 @utility clip-path-hidden {
-  clip-path: inset(0 100% 0 0);
+  clip-path: inset(0 0 0 100%);
 
-  &:is(html[dir="rtl"] *) {
-    clip-path: inset(0 0 0 100%);
+  @variant ltr {
+    clip-path: inset(0 100% 0 0);
   }
 }
 
 @utility clip-path-visible {
   clip-path: inset(0 0 0 0);
 
-  &:is(html[dir="rtl"] *) {
+  @variant ltr {
     clip-path: inset(0 0 0 0);
   }
 }
