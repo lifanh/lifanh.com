@@ -9,92 +9,92 @@ type CCLicenseType = "CC0 1.0" | "CC BY 4.0" | "CC BY-SA 4.0" | "CC BY-NC 4.0" |
 export type Section = "note" | "jotting";
 
 interface SiteConfigOptions<Locales extends readonly string[] = readonly string[]> {
-	/** Site Title */
-	title: string;
+  /** Site Title */
+  title: string;
 
-	/** Site Prologue */
-	prologue?: string;
+  /** Site Prologue */
+  prologue?: string;
 
-	/** Author Information */
-	author: {
-		/** Author Name */
-		name: string;
+  /** Author Information */
+  author: {
+    /** Author Name */
+    name: string;
 
-		/** Author Email */
-		email?: string;
+    /** Author Email */
+    email?: string;
 
-		/** Author Homepage Link */
-		link?: string;
-	};
+    /** Author Homepage Link */
+    link?: string;
+  };
 
-	/** Site Description */
-	description: string;
+  /** Site Description */
+  description: string;
 
-	/** Creative Commons License Configuration */
-	copyright: {
-		/** Creative Commons 4.0 License Type */
-		type: CCLicenseType;
+  /** Creative Commons License Configuration */
+  copyright: {
+    /** Creative Commons 4.0 License Type */
+    type: CCLicenseType;
 
-		/** License Year */
-		year: string;
-	};
+    /** License Year */
+    year: string;
+  };
 
-	/** Internationalization Configuration */
-	i18n: {
-		/** Supported Locales */
-		locales: Locales;
+  /** Internationalization Configuration */
+  i18n: {
+    /** Supported Locales */
+    locales: Locales;
 
-		/** Default Locale (must be one of the locales) */
-		defaultLocale: Locales[number];
-	};
+    /** Default Locale (must be one of the locales) */
+    defaultLocale: Locales[number];
+  };
 
-	/** Pagination Configuration */
-	pagination?: Partial<Record<Section, number>>;
+  /** Pagination Configuration */
+  pagination?: Partial<Record<Section, number>>;
 
-	/** Heatmap Configuration */
-	heatmap?:
-		| {
-				/**
-				 * Each cell represents a single day.
-				 *
-				 * Cells are organized vertically into columns of 7 days (one column per week).
-				 */
-				unit: "day";
+  /** Heatmap Configuration */
+  heatmap?:
+    | {
+        /**
+         * Each cell represents a single day.
+         *
+         * Cells are organized vertically into columns of 7 days (one column per week).
+         */
+        unit: "day";
 
-				/** Number of weeks to display in the heatmap. */
-				weeks?: number;
-		  }
-		| {
-				/**
-				 * Each cell represents a single week.
-				 *
-				 * Displays data using a fixed 52-week sliding window.
-				 */
-				unit: "week";
-		  }
-		| {
-				/**
-				 * Each cell represents a single month.
-				 *
-				 * Cells are organized horizontally into rows of 12 months (one row per year).
-				 */
-				unit: "month";
+        /** Number of weeks to display in the heatmap. */
+        weeks?: number;
+      }
+    | {
+        /**
+         * Each cell represents a single week.
+         *
+         * Displays data using a fixed 52-week sliding window.
+         */
+        unit: "week";
+      }
+    | {
+        /**
+         * Each cell represents a single month.
+         *
+         * Cells are organized horizontally into rows of 12 months (one row per year).
+         */
+        unit: "month";
 
-				/** Number of years to display in the heatmap. */
-				years?: number;
-		  };
+        /** Number of years to display in the heatmap. */
+        years?: number;
+      };
 
-	/** Feed Configuration */
-	feed?: {
-		/** Feed Sections */
-		section?: "*" | Section[];
+  /** Feed Configuration */
+  feed?: {
+    /** Feed Sections */
+    section?: "*" | Section[];
 
-		/** Feed Item Limit */
-		limit?: number;
-	};
+    /** Feed Item Limit */
+    limit?: number;
+  };
 
-	/** Latest Content Display */
-	latest?: "*" | Section[];
+  /** Latest Content Display */
+  latest?: "*" | Section[];
 }
 
 /**
@@ -106,5 +106,5 @@ interface SiteConfigOptions<Locales extends readonly string[] = readonly string[
  * @returns The validated site configuration
  */
 export default function siteConfig<const Locales extends string[]>(config: SiteConfigOptions<Locales>): SiteConfigOptions<Locales> {
-	return config;
+  return config;
 }

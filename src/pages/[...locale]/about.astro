@@ -6,8 +6,8 @@ import Base from "$layouts/Base.astro";
 import i18nit from "$i18n";
 
 export async function getStaticPaths() {
-	// Create path for each locale, omitting default locale from URL
-	return config.i18n.locales.map(locale => ({ params: { locale: config.i18n.defaultLocale === locale ? undefined : locale } }));
+  // Create path for each locale, omitting default locale from URL
+  return config.i18n.locales.map(locale => ({ params: { locale: config.i18n.defaultLocale === locale ? undefined : locale } }));
 }
 
 const { locale = config.i18n.defaultLocale } = Astro.params;
@@ -24,8 +24,8 @@ const { Content: Introduction } = introduction ? await render(introduction) : ({
 const { Content: Linkroll } = linkroll ? await render(linkroll) : ({} as any);
 
 const chronicles = Object.entries<string[]>(chronicle ?? {})
-	.map(([date, events]) => ({ date: new Date(date), events: events ?? [] }))
-	.sort((a, b) => b.date.getTime() - a.date.getTime());
+  .map(([date, events]) => ({ date: new Date(date), events: events ?? [] }))
+  .sort((a, b) => b.date.getTime() - a.date.getTime());
 ---
 
 <Base title={t("navigation.about")} {locale}>

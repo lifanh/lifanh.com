@@ -37,135 +37,135 @@ import siteConfig from "./site.config";
 
 // https://astro.build/config
 export default defineConfig({
-	site: "https://lifanh.com",
-	trailingSlash: "never",
-	i18n: {
-		...siteConfig.i18n,
-		routing: {
-			redirectToDefaultLocale: false,
-			prefixDefaultLocale: false
-		}
-	},
-	markdown: {
-		remarkPlugins: [
-			[GFM, { singleTilde: false }],
-			ins,
-			mark,
-			spoiler,
-			CJK,
-			[CJKStrikethrough, { singleTilde: false }],
-			ruby,
-			attr,
-			math,
-			gemoji,
-			footnote,
-			abbr,
-			[table, { colspanWithEmpty: true }],
-			[alerts, { typeFormat: "capitalize" }],
-			reading
-		],
-		remarkRehype: {
-			footnoteLabel: null,
-			footnoteLabelTagName: "p",
-			footnoteLabelProperties: {
-				className: ["hidden"]
-			},
-			handlers: {
-				...tableHandler
-			}
-		},
-		rehypePlugins: [
-			ids,
-			[anchor, { behavior: "wrap" }],
-			[links, { target: "_blank", rel: ["nofollow", "noopener", "noreferrer"] }],
-			katex,
-			figure,
-			wrapper,
-			sectionize
-		],
-		smartypants: false,
-		shikiConfig: {
-			themes: {
-				light: "github-light",
-				dark: "dark-plus"
-			},
-			transformers: [copy({ duration: 1500 })]
-		}
-	},
-	vite: {
-		plugins: [yaml(), tailwindcss()]
-	},
-	integrations: [
-		svelte(),
-		mdx(),
-		sitemap(),
-		swup({
-			globalInstance: true,
-			preload: false,
-			smoothScrolling: false,
-			progress: true
-		})
-	],
-	experimental: {
-		fonts: [
-			{
-				name: "Noto Serif",
-				provider: fontProviders.google(),
-				weights: [400, 700],
-				optimizedFallbacks: false,
-				fallbacks: ["Noto Serif", "Georgia", "Times New Roman", "serif"],
-				cssVariable: "--font-noto-serif"
-			},
-			{
-				name: "Noto Serif SC",
-				provider: fontProviders.google(),
-				weights: [400, 700],
-				optimizedFallbacks: false,
-				fallbacks: ["Noto Serif SC", "Source Han Serif SC", "STSong", "Songti SC", "SimSun", "serif"],
-				cssVariable: "--font-noto-serif-sc"
-			},
-			{
-				name: "Noto Serif JP",
-				provider: fontProviders.google(),
-				weights: [400, 700],
-				optimizedFallbacks: false,
-				fallbacks: ["Noto Serif JP", "Source Han Serif JP", "Hiragino Mincho ProN", "MS Mincho", "serif"],
-				cssVariable: "--font-noto-serif-jp"
-			},
-			{
-				name: "Playwrite MX",
-				provider: fontProviders.google(),
-				weights: [100],
-				display: "block",
-				subsets: ["fallback"],
-				fallbacks: ["Apple Chancery", "Segoe Script", "cursive"],
-				cssVariable: "--font-playwrite-mx"
-			}
-			// TODO: Re-enable when ZeoSeven font CDN is accessible
-			// {
-			// 	name: "Maple Mono NF CN",
-			// 	provider: ZeoSevenFonts(),
-			// 	optimizedFallbacks: false,
-			// 	fallbacks: [
-			// 		"Maple Mono NF CN",
-			// 		"Maple Mono NF",
-			// 		"Maple Mono CN",
-			// 		"Maple Mono",
-			// 		"Consolas",
-			// 		"Monaco",
-			// 		"Cascadia Code",
-			// 		"Courier New",
-			// 		"monospace"
-			// 	],
-			// 	cssVariable: "--font-maple-mono-nf-cn"
-			// },
-			// {
-			// 	name: "The Peak Font Plus",
-			// 	provider: ZeoSevenFonts(),
-			// 	optimizedFallbacks: false,
-			// 	fallbacks: ["Georgia", "STSong", "serif"],
-			// 	cssVariable: "--font-the-peak-font-plus"
-			// }
-		]
-	}
+  site: "https://lifanh.com",
+  trailingSlash: "never",
+  i18n: {
+    ...siteConfig.i18n,
+    routing: {
+      redirectToDefaultLocale: false,
+      prefixDefaultLocale: false
+    }
+  },
+  markdown: {
+    remarkPlugins: [
+      [GFM, { singleTilde: false }],
+      ins,
+      mark,
+      spoiler,
+      CJK,
+      [CJKStrikethrough, { singleTilde: false }],
+      ruby,
+      attr,
+      math,
+      gemoji,
+      footnote,
+      abbr,
+      [table, { colspanWithEmpty: true }],
+      [alerts, { typeFormat: "capitalize" }],
+      reading
+    ],
+    remarkRehype: {
+      footnoteLabel: null,
+      footnoteLabelTagName: "p",
+      footnoteLabelProperties: {
+        className: ["hidden"]
+      },
+      handlers: {
+        ...tableHandler
+      }
+    },
+    rehypePlugins: [
+      ids,
+      [anchor, { behavior: "wrap" }],
+      [links, { target: "_blank", rel: ["nofollow", "noopener", "noreferrer"] }],
+      katex,
+      figure,
+      wrapper,
+      sectionize
+    ],
+    smartypants: false,
+    shikiConfig: {
+      themes: {
+        light: "github-light",
+        dark: "dark-plus"
+      },
+      transformers: [copy({ duration: 1500 })]
+    }
+  },
+  vite: {
+    plugins: [yaml(), tailwindcss()]
+  },
+  integrations: [
+    svelte(),
+    mdx(),
+    sitemap(),
+    swup({
+      globalInstance: true,
+      preload: false,
+      smoothScrolling: false,
+      progress: true
+    })
+  ],
+  experimental: {
+    fonts: [
+      {
+        name: "Noto Serif",
+        provider: fontProviders.google(),
+        weights: [400, 700],
+        optimizedFallbacks: false,
+        fallbacks: ["Noto Serif", "Georgia", "Times New Roman", "serif"],
+        cssVariable: "--font-noto-serif"
+      },
+      {
+        name: "Noto Serif SC",
+        provider: fontProviders.google(),
+        weights: [400, 700],
+        optimizedFallbacks: false,
+        fallbacks: ["Noto Serif SC", "Source Han Serif SC", "STSong", "Songti SC", "SimSun", "serif"],
+        cssVariable: "--font-noto-serif-sc"
+      },
+      {
+        name: "Noto Serif JP",
+        provider: fontProviders.google(),
+        weights: [400, 700],
+        optimizedFallbacks: false,
+        fallbacks: ["Noto Serif JP", "Source Han Serif JP", "Hiragino Mincho ProN", "MS Mincho", "serif"],
+        cssVariable: "--font-noto-serif-jp"
+      },
+      {
+        name: "Playwrite MX",
+        provider: fontProviders.google(),
+        weights: [100],
+        display: "block",
+        subsets: ["fallback"],
+        fallbacks: ["Apple Chancery", "Segoe Script", "cursive"],
+        cssVariable: "--font-playwrite-mx"
+      }
+      // TODO: Re-enable when ZeoSeven font CDN is accessible
+      // {
+      // 	name: "Maple Mono NF CN",
+      // 	provider: ZeoSevenFonts(),
+      // 	optimizedFallbacks: false,
+      // 	fallbacks: [
+      // 		"Maple Mono NF CN",
+      // 		"Maple Mono NF",
+      // 		"Maple Mono CN",
+      // 		"Maple Mono",
+      // 		"Consolas",
+      // 		"Monaco",
+      // 		"Cascadia Code",
+      // 		"Courier New",
+      // 		"monospace"
+      // 	],
+      // 	cssVariable: "--font-maple-mono-nf-cn"
+      // },
+      // {
+      // 	name: "The Peak Font Plus",
+      // 	provider: ZeoSevenFonts(),
+      // 	optimizedFallbacks: false,
+      // 	fallbacks: ["Georgia", "STSong", "serif"],
+      // 	cssVariable: "--font-the-peak-font-plus"
+      // }
+    ]
+  }
 });

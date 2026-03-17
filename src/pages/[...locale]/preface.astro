@@ -6,8 +6,8 @@ import Base from "$layouts/Base.astro";
 import i18nit from "$i18n";
 
 export async function getStaticPaths() {
-	// Create path for each locale, omitting default locale from URL
-	return config.i18n.locales.map(locale => ({ params: { locale: config.i18n.defaultLocale === locale ? undefined : locale } }));
+  // Create path for each locale, omitting default locale from URL
+  return config.i18n.locales.map(locale => ({ params: { locale: config.i18n.defaultLocale === locale ? undefined : locale } }));
 }
 
 const { locale = config.i18n.defaultLocale } = Astro.params;
@@ -15,16 +15,16 @@ const { locale = config.i18n.defaultLocale } = Astro.params;
 const t = i18nit(locale);
 
 const prefaces = (
-	await getCollection("preface", preface => {
-		// Handle single locale setup
-		if (monolocale) return true;
+  await getCollection("preface", preface => {
+    // Handle single locale setup
+    if (monolocale) return true;
 
-		// Extract language and ID from file path structure
-		const [language, id] = preface.id.split("/");
-		preface.id = id;
+    // Extract language and ID from file path structure
+    const [language, id] = preface.id.split("/");
+    preface.id = id;
 
-		return language === locale;
-	})
+    return language === locale;
+  })
 ).sort((a, b) => b.data.timestamp.getTime() - a.data.timestamp.getTime());
 
 // Render each entry

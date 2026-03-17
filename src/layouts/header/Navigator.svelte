@@ -13,25 +13,25 @@ let { route, routes }: { route: string; routes: any[] } = $props();
  * @returns True if the route is active, false otherwise
  */
 function active(path: string, extra?: string[]) {
-	if (extra?.some(item => item === route)) return true;
-	if (path === routes[0].path) return path === route;
-	return route.startsWith(path);
+  if (extra?.some(item => item === route)) return true;
+  if (path === routes[0].path) return path === route;
+  return route.startsWith(path);
 }
 
 /**
  * Handle closing the sidebar navigation
  */
 function handleClose() {
-	document.getElementById("sidebar")!.classList.remove("active");
-	document.getElementById("sidebar-overlay")!.classList.remove("active");
+  document.getElementById("sidebar")!.classList.remove("active");
+  document.getElementById("sidebar-overlay")!.classList.remove("active");
 }
 
 onMount(() => {
-	/** Register route update hook */
-	const register = () => window.swup?.hooks.on("page:load", () => (route = window.location.pathname));
+  /** Register route update hook */
+  const register = () => window.swup?.hooks.on("page:load", () => (route = window.location.pathname));
 
-	// Register the hook immediately if swup is already enabled, otherwise wait for the enable event
-	window.swup ? register() : document.addEventListener("swup:enable", register, { once: true });
+  // Register the hook immediately if swup is already enabled, otherwise wait for the enable event
+  window.swup ? register() : document.addEventListener("swup:enable", register, { once: true });
 });
 </script>
 

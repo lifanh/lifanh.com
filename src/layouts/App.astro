@@ -5,9 +5,9 @@ import { getRelativeLocaleUrl } from "astro:i18n";
 const { locale, title, subtitle, description, author, article } = Astro.props;
 
 const mainFonts: Record<string, CssVariable> = {
-	en: "--font-noto-serif",
-	"zh-cn": "--font-noto-serif-sc",
-	ja: "--font-noto-serif-jp"
+  en: "--font-noto-serif",
+  "zh-cn": "--font-noto-serif-sc",
+  ja: "--font-noto-serif-jp"
 };
 
 const localedMainFont = mainFonts[locale];

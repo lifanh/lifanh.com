@@ -10,20 +10,20 @@ import i18nit from "$i18n";
  * Content item structure
  */
 interface ContentItem {
-	id: string;
-	data: {
-		title: string;
-		timestamp: Date;
-	};
+  id: string;
+  data: {
+    title: string;
+    timestamp: Date;
+  };
 }
 
 /**
  * Heatmap component props
  */
 interface Props {
-	locale: string;
-	notes: ContentItem[];
-	jottings: ContentItem[];
+  locale: string;
+  notes: ContentItem[];
+  jottings: ContentItem[];
 }
 
 let { locale, notes, jottings } = Astro.props;
@@ -41,81 +41,81 @@ const now = Time().toPlainDate();
 
 // Normalize notes and add to contents list
 notes.forEach(note => {
-	contents.push({
-		section: "note",
-		title: note.data.title,
-		date: Time(note.data.timestamp.toISOString()).toPlainDate(),
-		link: getRelativeLocaleUrl(locale, `/note/${monolocale ? note.id : note.id.split("/").slice(1).join("/")}`)
-	});
+  contents.push({
+    section: "note",
+    title: note.data.title,
+    date: Time(note.data.timestamp.toISOString()).toPlainDate(),
+    link: getRelativeLocaleUrl(locale, `/note/${monolocale ? note.id : note.id.split("/").slice(1).join("/")}`)
+  });
 });
 
 // Normalize jottings and add to contents list
 jottings.forEach(jotting => {
-	contents.push({
-		section: "jotting",
-		title: jotting.data.title,
-		date: Time(jotting.data.timestamp.toISOString()).toPlainDate(),
-		link: getRelativeLocaleUrl(locale, `/jotting/${monolocale ? jotting.id : jotting.id.split("/").slice(1).join("/")}`)
-	});
+  contents.push({
+    section: "jotting",
+    title: jotting.data.title,
+    date: Time(jotting.data.timestamp.toISOString()).toPlainDate(),
+    link: getRelativeLocaleUrl(locale, `/jotting/${monolocale ? jotting.id : jotting.id.split("/").slice(1).join("/")}`)
+  });
 });
 
 // Group content into heatmap cells based on the configured frequency
 if (frequency === "month") {
-	const { years = 4 } = config.heatmap?.unit === "month" ? config.heatmap : {};
-	const start = Temporal.PlainDate.from({ year: now.year - years + 1, month: 1, day: 1 });
-	const end = Temporal.PlainDate.from({ year: now.year, month: 12, day: 31 });
+  const { years = 4 } = config.heatmap?.unit === "month" ? config.heatmap : {};
+  const start = Temporal.PlainDate.from({ year: now.year - years + 1, month: 1, day: 1 });
+  const end = Temporal.PlainDate.from({ year: now.year, month: 12, day: 31 });
 
-	let current = start;
-	// Initialize month-based cells
-	while (Temporal.PlainDate.compare(current, end) <= 0) {
-		cells.push({
-			target: current.toLocaleString(locale, { month: "short", year: "numeric" }),
-			contents: []
-		});
-		current = current.add({ months: 1 });
-	}
+  let current = start;
+  // Initialize month-based cells
+  while (Temporal.PlainDate.compare(current, end) <= 0) {
+    cells.push({
+      target: current.toLocaleString(locale, { month: "short", year: "numeric" }),
+      contents: []
+    });
+    current = current.add({ months: 1 });
+  }
 
-	// Distribute content into month-based cells
-	contents.forEach(content => {
-		const gap = start.until(content.date, { largestUnit: "month" }).months;
-		if (gap >= 0 && gap < cells.length) cells[gap].contents.push(content);
-	});
+  // Distribute content into month-based cells
+  contents.forEach(content => {
+    const gap = start.until(content.date, { largestUnit: "month" }).months;
+    if (gap >= 0 && gap < cells.length) cells[gap].contents.push(content);
+  });
 } else if (frequency === "week") {
-	const start = now.subtract({ weeks: 51, days: now.dayOfWeek - 1 });
+  const start = now.subtract({ weeks: 51, days: now.dayOfWeek - 1 });
 
-	let current = start;
-	// Initialize week-based cells
-	while (Temporal.PlainDate.compare(current, now) <= 0) {
-		cells.push({
-			target: `${current.toLocaleString(locale, { month: "short", day: "numeric" })} - ${current.add({ days: 6 }).toLocaleString(locale, { month: "short", day: "numeric" })}`,
-			contents: []
-		});
-		current = current.add({ weeks: 1 });
-	}
+  let current = start;
+  // Initialize week-based cells
+  while (Temporal.PlainDate.compare(current, now) <= 0) {
+    cells.push({
+      target: `${current.toLocaleString(locale, { month: "short", day: "numeric" })} - ${current.add({ days: 6 }).toLocaleString(locale, { month: "short", day: "numeric" })}`,
+      contents: []
+    });
+    current = current.add({ weeks: 1 });
+  }
 
-	// Distribute content into week-based cells
-	contents.forEach(content => {
-		const gap = start.until(content.date, { largestUnit: "week" }).weeks;
-		if (gap >= 0 && gap < cells.length) cells[gap].contents.push(content);
-	});
+  // Distribute content into week-based cells
+  contents.forEach(content => {
+    const gap = start.until(content.date, { largestUnit: "week" }).weeks;
+    if (gap >= 0 && gap < cells.length) cells[gap].contents.push(content);
+  });
 } else {
-	const weekend = now.add({ days: 7 - now.dayOfWeek });
+  const weekend = now.add({ days: 7 - now.dayOfWeek });
 
-	const { weeks = 20 } = config.heatmap?.unit === "day" ? config.heatmap : {};
-	const start = weekend.subtract({ weeks: weeks - 1, days: 6 });
+  const { weeks = 20 } = config.heatmap?.unit === "day" ? config.heatmap : {};
+  const start = weekend.subtract({ weeks: weeks - 1, days: 6 });
 
-	let current = start;
-	// Initialize day-based cells
-	while (Temporal.PlainDate.compare(current, weekend) <= 0) {
-		cells.push({ target: current.toLocaleString(locale, { dateStyle: "medium" }), contents: [] });
-		current = current.add({ days: 1 });
-	}
+  let current = start;
+  // Initialize day-based cells
+  while (Temporal.PlainDate.compare(current, weekend) <= 0) {
+    cells.push({ target: current.toLocaleString(locale, { dateStyle: "medium" }), contents: [] });
+    current = current.add({ days: 1 });
+  }
 
-	// Distribute content into day-based cells
-	contents.forEach(content => {
-		const gap = start.until(content.date, { largestUnit: "day" }).days;
-		if (gap >= 0 && gap < cells.length) cells[gap].contents.push(content);
-	});
+  // Distribute content into day-based cells
+  contents.forEach(content => {
+    const gap = start.until(content.date, { largestUnit: "day" }).days;
+    if (gap >= 0 && gap < cells.length) cells[gap].contents.push(content);
+  });
 }
 ---
 

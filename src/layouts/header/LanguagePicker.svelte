@@ -9,11 +9,11 @@ let { locale, route }: { locale: string; route: string } = $props();
 let path: string | undefined = $derived(route.slice(`/${locale === config.i18n.defaultLocale ? "" : locale}`.length) || undefined);
 
 onMount(() => {
-	/** Register route update hook */
-	const register = () => window.swup?.hooks.on("page:load", () => (route = window.location.pathname));
+  /** Register route update hook */
+  const register = () => window.swup?.hooks.on("page:load", () => (route = window.location.pathname));
 
-	// Register the hook immediately if swup is already enabled, otherwise wait for the enable event
-	window.swup ? register() : document.addEventListener("swup:enable", register, { once: true });
+  // Register the hook immediately if swup is already enabled, otherwise wait for the enable event
+  window.swup ? register() : document.addEventListener("swup:enable", register, { once: true });
 });
 </script>
 

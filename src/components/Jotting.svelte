@@ -27,65 +27,65 @@ let tags: string[] = $state([]);
  * @param turn whether to include or exclude the tag
  */
 function switchTag(tag: string, turn?: boolean) {
-	let included = tags.includes(tag);
-	if (turn === undefined) turn = !included;
+  let included = tags.includes(tag);
+  if (turn === undefined) turn = !included;
 
-	// Add tag if turning on and not included, or remove if turning off
-	tags = turn ? (included ? tags : [...tags, tag]) : tags.filter(item => item !== tag);
+  // Add tag if turning on and not included, or remove if turning off
+  tags = turn ? (included ? tags : [...tags, tag]) : tags.filter(item => item !== tag);
 
-	// Reset page parameter
-	pageParam = false;
-	page = 1;
+  // Reset page parameter
+  pageParam = false;
+  page = 1;
 }
 
 /** Filtered and paginated list of jottings */
 let list: any[] = $derived.by(() => {
-	let filtered: any[] = jottings
-		// Check if jotting contains all specified tags
-		.filter(jotting => tags.every(tag => jotting.data.tags?.includes(tag)))
-		// Sort by timestamp (newest first)
-		.sort((a, b) => b.data.top - a.data.top || b.data.timestamp.getTime() - a.data.timestamp.getTime());
+  let filtered: any[] = jottings
+    // Check if jotting contains all specified tags
+    .filter(jotting => tags.every(tag => jotting.data.tags?.includes(tag)))
+    // Sort by timestamp (newest first)
+    .sort((a, b) => b.data.top - a.data.top || b.data.timestamp.getTime() - a.data.timestamp.getTime());
 
-	untrack(() => {
-		// Ensure page is within valid range
-		pages = Math.ceil(filtered.length / size);
-		page = Math.max(1, Math.min(Math.floor(page), pages));
-	});
+  untrack(() => {
+    // Ensure page is within valid range
+    pages = Math.ceil(filtered.length / size);
+    page = Math.max(1, Math.min(Math.floor(page), pages));
+  });
 
-	// Apply pagination by slicing the array
-	filtered = filtered.slice((page - 1) * size, page * size);
+  // Apply pagination by slicing the array
+  filtered = filtered.slice((page - 1) * size, page * size);
 
-	return filtered;
+  return filtered;
 });
 
 $effect(() => {
-	if (initial) {
-		// Parse URL parameters when component is first mounted
-		const params = new URLSearchParams(window.location.search);
+  if (initial) {
+    // Parse URL parameters when component is first mounted
+    const params = new URLSearchParams(window.location.search);
 
-		if (params.get("page") !== null) {
-			pageParam = true;
-			const value = Number(params.get("page"));
-			page = Number.isNaN(value) ? 1 : value;
-		}
+    if (params.get("page") !== null) {
+      pageParam = true;
+      const value = Number(params.get("page"));
+      page = Number.isNaN(value) ? 1 : value;
+    }
 
-		tags = params.getAll("tag");
+    tags = params.getAll("tag");
 
-		initial = false;
-	} else {
-		// Build URL with current page, series, and tag filters using URLSearchParams
-		const url = new URL(window.location.href);
-		url.searchParams.delete("tag");
-		url.searchParams.delete("page");
+    initial = false;
+  } else {
+    // Build URL with current page, series, and tag filters using URLSearchParams
+    const url = new URL(window.location.href);
+    url.searchParams.delete("tag");
+    url.searchParams.delete("page");
 
-		for (const tag of tags) url.searchParams.append("tag", tag);
+    for (const tag of tags) url.searchParams.append("tag", tag);
 
-		if (page > 1) pageParam = true;
-		if (pageParam) url.searchParams.set("page", String(page));
+    if (page > 1) pageParam = true;
+    if (pageParam) url.searchParams.set("page", String(page));
 
-		// Match https://github.com/swup/swup/blob/main/src/helpers/history.ts#L22
-		window.history.replaceState({ url: url.toString(), random: Math.random(), source: "swup" }, "", url);
-	}
+    // Match https://github.com/swup/swup/blob/main/src/helpers/history.ts#L22
+    window.history.replaceState({ url: url.toString(), random: Math.random(), source: "swup" }, "", url);
+  }
 });
 </script>
 

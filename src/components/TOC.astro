@@ -4,9 +4,9 @@ import Icon from "$components/Icon.svelte";
 import i18nit from "$i18n";
 
 interface Props {
-	locale: string;
-	headings?: Heading[];
-	series?: { title: string; url: string; current: boolean }[];
+  locale: string;
+  headings?: Heading[];
+  series?: { title: string; url: string; current: boolean }[];
 }
 
 const { locale, headings, series } = Astro.props;
@@ -19,35 +19,35 @@ const t = i18nit(locale);
 type Heading = MarkdownHeading & { last?: boolean; lines?: boolean[] };
 
 if (headings) {
-	// Determine which headings are the last in their sibling group
-	const stack: Heading[] = [];
-	headings.forEach(heading => {
-		// Pop headings from the stack that are at the same or deeper level
-		while (stack[stack.length - 1]?.depth >= heading.depth) {
-			const top = stack.pop();
-			// Mark as last if popped due to a shallower heading (not a sibling)
-			if (top && top.depth !== heading.depth) top.last = true;
-		}
+  // Determine which headings are the last in their sibling group
+  const stack: Heading[] = [];
+  headings.forEach(heading => {
+    // Pop headings from the stack that are at the same or deeper level
+    while (stack[stack.length - 1]?.depth >= heading.depth) {
+      const top = stack.pop();
+      // Mark as last if popped due to a shallower heading (not a sibling)
+      if (top && top.depth !== heading.depth) top.last = true;
+    }
 
-		stack.push(heading);
-	});
+    stack.push(heading);
+  });
 
-	// Mark all remaining headings in the stack as last (they have no following siblings)
-	while (stack.length > 0) stack.pop()!.last = true;
+  // Mark all remaining headings in the stack as last (they have no following siblings)
+  while (stack.length > 0) stack.pop()!.last = true;
 
-	// Calculate which vertical connector lines to show for each heading
-	const actives: boolean[] = [];
+  // Calculate which vertical connector lines to show for each heading
+  const actives: boolean[] = [];
 
-	headings.forEach(heading => {
-		// For each depth level above this heading, record whether a vertical line should be drawn
-		for (let depth = 2; depth < heading.depth; depth++) {
-			heading.lines ??= [];
-			heading.lines[depth - 2] = actives[depth - 2];
-		}
+  headings.forEach(heading => {
+    // For each depth level above this heading, record whether a vertical line should be drawn
+    for (let depth = 2; depth < heading.depth; depth++) {
+      heading.lines ??= [];
+      heading.lines[depth - 2] = actives[depth - 2];
+    }
 
-		// Update the active state for this heading's depth level
-		actives[heading.depth - 2] = !heading.last;
-	});
+    // Update the active state for this heading's depth level
+    actives[heading.depth - 2] = !heading.last;
+  });
 }
 ---
 
