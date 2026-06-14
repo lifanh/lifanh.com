@@ -1,5 +1,4 @@
 import type { APIRoute } from "astro";
-import { experimental_AstroContainer as AstroContainer } from "astro/container";
 import { getCollection, render } from "astro:content";
 import { getRelativeLocaleUrl } from "astro:i18n";
 import { Feed } from "feed";
@@ -85,16 +84,13 @@ export const GET: APIRoute = async ({ site, params }) => {
     .sort((a, b) => b.data.timestamp.getTime() - a.data.timestamp.getTime()) // Sort by newest first
     .slice(0, config.feed?.limit || items.length); // Limit to number of items
 
-  // Create an Astro container for rendering content
-  const container = await AstroContainer.create();
   await Promise.all(
     items.map(async item => {
       if (item.rendered) {
-        // Render content for each item
-        const content = await container.renderToString((await render(item)).Content);
+        await render(item);
 
         // Rewrite relative paths to absolute URLs for media assets
-        item.rendered.html = content.replace(/(?<=src=")\/(?!\/)([^"]+)/g, `${site?.origin}/$1`);
+        item.rendered.html = item.rendered.html.replace(/(?<=src=")\/(?!\/)([^"]+)/g, `${site?.origin}/$1`);
       }
     })
   );
