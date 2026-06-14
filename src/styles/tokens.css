@@ -4,20 +4,20 @@
   /* Light theme colors */
   --primary-color-light: #2a2a28;
   --secondary-color-light: #50504d;
-  --remark-color-light: #757575;
+  --remark-color-light: #757573;
   --weak-color-light: #9f9f9c;
   --background-color-light: #fffffd;
-  --block-color-light: #eeeeee;
+  --block-color-light: #eeeeec;
   --shadow-color-light: #cdcdcc;
   --selection-color-light: rgba(173, 173, 172, 0.76);
 
   /* Dark theme colors */
   --primary-color-dark: #dddddb;
   --secondary-color-dark: #aaaaa8;
-  --remark-color-dark: #a5a5a5;
+  --remark-color-dark: #a5a5a3;
   --weak-color-dark: #5d5d5a;
   --background-color-dark: #0e0e0c;
-  --block-color-dark: #1e1e1e;
+  --block-color-dark: #1e1e1c;
   --shadow-color-dark: #323231;
   --selection-color-dark: rgba(173, 173, 172, 0.76);
 
@@ -56,8 +56,9 @@
   --spacing-xl: 32px;
   --spacing-2xl: 48px;
   --spacing-3xl: 64px;
-  --font-serif: "Noto Serif", serif;
-  --font-monospace: "Maple Mono NF CN", monospace;
+  --font-serif: Newsreader, Garamond, Georgia, "Times New Roman", serif;
+  --font-sans: "IBM Plex Sans", "Helvetica Neue", Arial, system-ui, sans-serif;
+  --font-monospace: "IBM Plex Mono", Consolas, Monaco, "Courier New", monospace;
   --font-cursive: "Playwrite MX", "The Peak Font Plus", serif;
 }
 

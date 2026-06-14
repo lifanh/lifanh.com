@@ -11,7 +11,7 @@ This is a personal website built with Astro, based on the ThoughtLite theme temp
 - Site URL: https://lifanh.com
 - License: GPL-3.0
 - Primary Language: TypeScript
-- Framework: Astro 5.x
+- Framework: Astro 6.x
 - UI Framework: Svelte 5.x
 - Styling: Tailwind CSS 4.x
 - Code Quality: Biome

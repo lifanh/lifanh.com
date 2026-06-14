@@ -1,11 +1,15 @@
 {
   "font": {
     "serif": {
-      "value": "Noto Serif, serif",
+      "value": "Newsreader, Garamond, Georgia, Times New Roman, serif",
+      "type": "fontFamily"
+    },
+    "sans": {
+      "value": "IBM Plex Sans, Helvetica Neue, Arial, system-ui, sans-serif",
       "type": "fontFamily"
     },
     "monospace": {
-      "value": "Maple Mono NF CN, monospace",
+      "value": "IBM Plex Mono, Consolas, Monaco, Courier New, monospace",
       "type": "fontFamily"
     },
     "cursive": {
