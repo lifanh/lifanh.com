@@ -21,7 +21,7 @@ import footnote from "remark-footnotes-extra";
 import abbr from "@tuyuritio/remark-abbreviation";
 import { remarkExtendedTable as table, extendedTableHandlers as tableHandler } from "remark-extended-table";
 import alerts from "@tuyuritio/remark-github-alert";
-import { rehypeHeadingIds as ids } from "@astrojs/markdown-remark";
+import { rehypeHeadingIds as ids, unified } from "@astrojs/markdown-remark";
 import anchor from "rehype-autolink-headings";
 import links from "rehype-external-links";
 import katex from "rehype-katex";
@@ -47,43 +47,45 @@ export default defineConfig({
     }
   },
   markdown: {
-    remarkPlugins: [
-      [GFM, { singleTilde: false }],
-      ins,
-      mark,
-      spoiler,
-      CJK,
-      [CJKStrikethrough, { singleTilde: false }],
-      ruby,
-      attr,
-      math,
-      gemoji,
-      footnote,
-      abbr,
-      [table, { colspanWithEmpty: true }],
-      [alerts, { typeFormat: "capitalize" }],
-      reading
-    ],
-    remarkRehype: {
-      footnoteLabel: null,
-      footnoteLabelTagName: "p",
-      footnoteLabelProperties: {
-        className: ["hidden"]
+    processor: unified({
+      remarkPlugins: [
+        [GFM, { singleTilde: false }],
+        ins,
+        mark,
+        spoiler,
+        CJK,
+        [CJKStrikethrough, { singleTilde: false }],
+        ruby,
+        attr,
+        math,
+        gemoji,
+        footnote,
+        abbr,
+        [table, { colspanWithEmpty: true }],
+        [alerts, { typeFormat: "capitalize" }],
+        reading
+      ],
+      remarkRehype: {
+        footnoteLabel: null,
+        footnoteLabelTagName: "p",
+        footnoteLabelProperties: {
+          className: ["hidden"]
+        },
+        handlers: {
+          ...tableHandler
+        }
       },
-      handlers: {
-        ...tableHandler
-      }
-    },
-    rehypePlugins: [
-      ids,
-      [anchor, { behavior: "wrap" }],
-      [links, { target: "_blank", rel: ["nofollow", "noopener", "noreferrer"] }],
-      katex,
-      figure,
-      wrapper,
-      sectionize
-    ],
-    smartypants: false,
+      rehypePlugins: [
+        ids,
+        [anchor, { behavior: "wrap" }],
+        [links, { target: "_blank", rel: ["nofollow", "noopener", "noreferrer"] }],
+        katex,
+        figure,
+        wrapper,
+        sectionize
+      ],
+      smartypants: false
+    }),
     shikiConfig: {
       themes: {
         light: "github-light",
@@ -108,29 +110,12 @@ export default defineConfig({
   ],
   fonts: [
     {
-      name: "Newsreader",
+      name: "Noto Serif",
       provider: fontProviders.google(),
-      weights: [400, 500, 700],
-      styles: ["normal", "italic"],
+      weights: [400, 700],
       optimizedFallbacks: false,
-      fallbacks: ["Garamond", "Georgia", "Times New Roman", "serif"],
-      cssVariable: "--font-newsreader"
-    },
-    {
-      name: "IBM Plex Sans",
-      provider: fontProviders.google(),
-      weights: [300, 400, 600],
-      optimizedFallbacks: false,
-      fallbacks: ["Helvetica Neue", "Arial", "system-ui", "sans-serif"],
-      cssVariable: "--font-ibm-plex-sans"
-    },
-    {
-      name: "IBM Plex Mono",
-      provider: fontProviders.google(),
-      weights: [400, 500],
-      optimizedFallbacks: false,
-      fallbacks: ["Consolas", "Monaco", "Courier New", "monospace"],
-      cssVariable: "--font-ibm-plex-mono"
+      fallbacks: ["Noto Serif", "Georgia", "Times New Roman", "serif"],
+      cssVariable: "--font-noto-serif"
     },
     {
       name: "Noto Serif SC",

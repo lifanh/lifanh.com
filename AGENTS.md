@@ -180,7 +180,7 @@ Configured in `astro.config.ts`. Key features:
 Use npm: `npm install <package>`. Prefer actively maintained, TypeScript-compatible, lightweight packages. Consider GPL-3.0 license compatibility.
 
 ### Core Stack
-Astro 5.x, Svelte 5.x, Tailwind CSS 4.x, TypeScript, Biome, MDX, Luxon, Shiki, Swup, Satori + Sharp
+Astro 6.x, Svelte 5.x, Tailwind CSS 4.x, TypeScript, Biome, MDX, Luxon, Shiki, Swup, Satori + Sharp
 
 ## Common Tasks
 
