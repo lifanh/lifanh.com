@@ -110,12 +110,29 @@ export default defineConfig({
   ],
   fonts: [
     {
-      name: "Noto Serif",
+      name: "Newsreader",
       provider: fontProviders.google(),
-      weights: [400, 700],
+      weights: [400, 500, 700],
+      styles: ["normal", "italic"],
       optimizedFallbacks: false,
-      fallbacks: ["Noto Serif", "Georgia", "Times New Roman", "serif"],
-      cssVariable: "--font-noto-serif"
+      fallbacks: ["Garamond", "Georgia", "Times New Roman", "serif"],
+      cssVariable: "--font-newsreader"
+    },
+    {
+      name: "IBM Plex Sans",
+      provider: fontProviders.google(),
+      weights: [300, 400, 600],
+      optimizedFallbacks: false,
+      fallbacks: ["Helvetica Neue", "Arial", "system-ui", "sans-serif"],
+      cssVariable: "--font-ibm-plex-sans"
+    },
+    {
+      name: "IBM Plex Mono",
+      provider: fontProviders.google(),
+      weights: [400, 500],
+      optimizedFallbacks: false,
+      fallbacks: ["Consolas", "Monaco", "Courier New", "monospace"],
+      cssVariable: "--font-ibm-plex-mono"
     },
     {
       name: "Noto Serif SC",
