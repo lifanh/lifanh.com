@@ -55,7 +55,7 @@
 		"@tuyuritio/remark-ruby": "^1.0.2",
 		"@tuyuritio/remark-spoiler": "^0.0.2",
 		"@tuyuritio/shiki-code-copy": "^1.0.0",
-		"astro": "^6.4.2",
+		"astro": "^6.4.8",
 		"feed": "^5.2.0",
 		"katex": "^0.16.28",
 		"mdast-util-to-string": "^4.0.0",
