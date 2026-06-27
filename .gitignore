@@ -35,3 +35,11 @@ wrangler.toml
 
 # jetbrains setting folder
 .idea/
+
+# local workspace and tutorial files
+MISSION.md
+NOTES.md
+RESOURCES.md
+learning-records/
+lessons/
+reference/
