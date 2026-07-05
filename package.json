@@ -74,7 +74,7 @@
 		"remark-gfm": "^4.0.1",
 		"remark-ins": "^1.2.3",
 		"remark-math": "^6.0.0",
-		"svelte": "^5.53.1",
+		"svelte": "^5.56.3",
 		"tailwindcss": "^4.2.0",
 		"temporal-polyfill": "^0.3.0",
 		"typescript": "^5.9.3",
