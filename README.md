@@ -1,166 +1,162 @@
-# WIP...
+# astro-quiet-paper
 
-# The README of Template ThoughtLite
+[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/lifanh/astro-quiet-paper)
 
-<div align="center">
-    <p>
-        <img alt="ThoughtLite Light Mode Preview" src=".github/assets/preview-light.webp">
-        <img alt="ThoughtLite Dark Mode Preview" src=".github/assets/preview-dark.webp">
-    </p>
-    <p>
-        <a href="https://github.com/tuyuritio/astro-theme-thought-lite/releases/latest"><img alt="GitHub Release" src="https://img.shields.io/github/v/release/tuyuritio/astro-theme-thought-lite"></a>
-        <a href="https://raw.githubusercontent.com/tuyuritio/astro-theme-thought-lite/refs/heads/main/LICENSE"><img alt="GitHub License" src="https://img.shields.io/github/license/tuyuritio/astro-theme-thought-lite"></a>
-        <a href="https://deepwiki.com/tuyuritio/astro-theme-thought-lite"><img alt="Ask DeepWiki" src="https://deepwiki.com/badge.svg"></a>
-    </p>
-    <p>A modern <a href="https://astro.build/">Astro</a> theme, focused on content creation 🌟</p>
-    <p>
-        <small><ins>English</ins></small>
-        <small><a href="README.zh-cn.md">简体中文</a></small>
-        <small><a href="README.ja.md">日本語</a></small>
-    </p>
-</div>
+**Live preview:** <https://astro-quiet-paper.lifanh.workers.dev/>
 
-> [!NOTE]
-> - `main` branch✅: Static build, can be deployed on any static hosting platform.
-> - `cloudflare` branch: Enables built-in comment system, only deployable on Cloudflare.
+Astro **template** for a prose-first personal site: static pages, Markdown writing, and a hidden React island demo styled with [`@lifanh/quiet-paper`](https://www.npmjs.com/package/@lifanh/quiet-paper).
 
-🎬 **Live Demo**: [Vercel](https://thought-lite.vercel.app/)
+**Quiet paper:** warm off-white, ink-like type, hairline borders, one restrained accent — no dashboard chrome.
 
-## ✨ Features
+![Astro quiet-paper homepage preview](docs/preview.png)
 
-- [x] **Responsive Design** - Adaptive for mobile, tablet, and desktop.
-- [x] **Light / Dark Mode** - Auto-follows system preference with manual toggle support.
-- [x] **CSR Dynamic Content Filtering** - List filtering and pagination via History API.
-- [x] **i18n Support** - Extensible multilingual support, also works perfectly in monolingual mode.
-- [x] **Sitemap & Feed Subscription** - Automated generation of Sitemap and Atom Feed.
-- [x] **OpenGraph Support** - Built-in Open Graph meta tags for optimized social media sharing.
+## Stack
 
-## ⚡️ Quick Start
+| Layer | Choice |
+|--------|--------|
+| Static | Astro 7 |
+| Writing | Astro content collections + Markdown |
+| Islands | React 19 + `@astrojs/react` |
+| Styles | Tailwind CSS v4 + design system tokens |
+| Discovery | RSS, sitemap, robots |
 
-### Using Astro Command
+## Quick start
 
-Run the following command:
-
-```sh
-npm create astro --template tuyuritio/astro-theme-thought-lite
-
-# Follow the interactive prompts to create the project
-
-cd <your-project-name>
-npm run dev
-```
-
-### Using Template
-
-1. [Use this template](https://github.com/new?template_name=astro-theme-thought-lite&template_owner=tuyuritio) to create a new repository or [fork](https://github.com/tuyuritio/astro-theme-thought-lite/fork) this repository.
-2. Run the following commands:
-
-```sh
-git clone <your-repo-url>
-cd <your-repo-name>
+```bash
+git clone git@github.com:lifanh/astro-quiet-paper.git my-site
+cd my-site
 npm install
 npm run dev
 ```
 
-## 🔧 Configuration
+Open `http://localhost:4321`.
 
-Customize site configuration and internationalization (i18n) by modifying the following files:
+Before deploying, replace the template identity and URL in `src/site.ts` and `astro.config.mjs`.
 
-- `.env`
-- `astro.config.ts`
-- `site.config.ts`
+## Writing
 
-For basic configuration, refer to the [Site Configuration Guide](src/content/note/en/configuration.md).
+Posts live in `src/content/posts/*.md`:
 
-For i18n configuration, refer to the [Internationalization Configuration Guide](src/content/note/en/internationalization.md).
+```md
+---
+title: "Designing with less"
+description: "Short summary for lists and SEO."
+date: 2026-07-05
+tags: ["design", "systems"]
+draft: false
+---
+```
 
-## 💻 Commands
+Routes included:
 
-The theme provides the following commonly used commands:
+- `/writing` — all non-draft posts
+- `/writing/[...slug]` — individual posts
+- `/rss.xml` — feed for non-draft posts
+- `/robots.txt` and `/sitemap-index.xml` — crawler discovery
+
+The homepage automatically shows the latest three non-draft posts.
+
+Fenced `mermaid` code blocks are rendered to inline SVG at build time. The original Mermaid source remains available under each diagram’s “Mermaid source” disclosure. Generated SVGs are cached in `src/generated/mermaid/`; commit those files so Cloudflare Workers Builds can render the site without launching Chromium on every deploy. Locally, `npm run build` generates or repairs missing/invalid cache files before Astro starts. In CI/Workers Builds, it checks that every Mermaid fence under `src/` has a committed, complete SVG before Astro starts.
+
+## Design system setup
+
+Tokens and utilities come from the package (Tailwind v4 Pattern A). Already wired in `src/styles/global.css`:
+
+```css
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+@import "@lifanh/quiet-paper/styles/tailwind-sources.css";
+@import "@lifanh/quiet-paper/styles/tokens.css" layer(theme);
+@import "@lifanh/quiet-paper/styles/tailwind-theme.css";
+```
+
+Components in React islands and rendered Markdown pages:
+
+```tsx
+import { Panel, Button, Prose } from "@lifanh/quiet-paper";
+```
+
+The developer demo route stays at `/demo`, but it is intentionally not linked from the site chrome.
+
+## Customize
+
+| File | What to change |
+|------|----------------|
+| `src/site.ts` | Site name, public URL, nav, default meta |
+| `astro.config.mjs` | Astro `site` URL for sitemap/canonical output |
+| `src/pages/index.astro` | Homepage copy (Work / Writing / Contact) |
+| `src/content/pages/about.md` | About page copy |
+| `src/content/posts/*.md` | Writing entries |
+| `src/generated/mermaid/*.svg` | Build-time rendered Mermaid diagrams |
+| `src/demo/*` | Demo composites — copy patterns, don’t fork primitives |
+
+Primitives (`Button`, `Field`, `ErrorState`, …) live in the **design system repo**, not here.
+
+## Project layout
+
+```text
+src/
+├── components/                # site chrome (header, footer)
+├── demo/                      # React islands for /demo only
+├── content/pages/about.md     # Markdown-backed About page
+├── content/posts/             # Markdown writing
+├── content.config.ts          # page/post frontmatter schemas
+├── layouts/BaseLayout.astro   # shell + global meta + CSS
+├── lib/posts.ts               # writing helpers
+├── lib/markdown/mermaid.js    # build-time Mermaid renderer/cache check
+├── pages/                     # routes, RSS, robots
+├── generated/mermaid/         # committed SVG cache for Mermaid fences
+├── site.ts                    # nav + metadata
+└── styles/global.css          # Tailwind + DS imports
+```
+
+## Commands
 
 | Command | Action |
-| --- | --- |
-| `npm install` | Install project dependencies |
-| `npm update` | Update project dependencies |
-| `npm run new` | Create a new content file |
-| `npm run tokens:build` | Build design tokens from JSON to CSS |
-| `npm run tokens:watch` | Watch for token changes and rebuild automatically |
-| `npm run dev` | Start dev server with automatic token rebuilding |
-| `npm run check` | Run Astro type checking |
-| `npm run build` | Build the production version |
-| `npm run preview` | Preview the built site |
-| `npm run format` | Format code |
-| `npm run lint` | Lint code |
+|---------|--------|
+| `npm run dev` | Dev server `:4321` |
+| `npm run lint` | Oxlint source checks |
+| `npm run check` | Astro + TypeScript diagnostics |
+| `npm run build` | Static `dist/` |
+| `npm run mermaid:prune` | Remove stale generated Mermaid SVGs |
+| `npm run preview` | Preview production build |
 
-## 🎨 Design Tokens
+## Deploy
 
-This project uses a centralized design token system powered by Style Dictionary. Tokens provide consistent design values for colors, spacing, typography, and more.
+### Deploy to Cloudflare Workers (one click)
 
-For detailed documentation on working with design tokens, see [TOKENS.md](TOKENS.md).
+Use the **Deploy to Cloudflare** button above (or open the [deploy flow](https://deploy.workers.cloudflare.com/?url=https://github.com/lifanh/astro-quiet-paper)). Cloudflare will fork the repo into your GitHub account, connect **Workers Builds**, and deploy static assets from `dist/` using [`wrangler.jsonc`](wrangler.jsonc).
 
-## 🚀 Deployment
+Suggested build settings (usually auto-detected):
 
-The current branch can be fully static built and deployed on any static hosting platform.
+| Setting | Value |
+|---------|--------|
+| Build command | `npm run build` |
+| Deploy command | `npx wrangler deploy` |
 
-For deployment methods on various platforms, refer to the [Astro Official Deployment Guide](https://docs.astro.build/en/guides/deploy/).
+If your site includes Mermaid diagrams, commit `src/generated/mermaid/*.svg` after a local build. If Cloudflare Workers Builds sees a new Mermaid block without a cached SVG, the build fails with instructions instead of silently omitting the diagram.
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/tuyuritio/astro-theme-thought-lite&project-name=astro-blog-thought-lite&repository-name=astro-blog-thought-lite&teamSlug=tuyuritios-projects)
-[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/integration/start/deploy?repository=https://github.com/tuyuritio/astro-theme-thought-lite)
+CI/Workers Builds skip Puppeteer’s browser download because they only validate committed SVGs. If a local build needs to render a new diagram and Puppeteer reports a missing browser, run `npx puppeteer browsers install chrome-headless-shell`, then run `npm run build` again. If you change the Mermaid renderer or theme, run `npm run build` to refresh SVG cache files, then run `npx astro build --force` once so Astro does not reuse old rendered Markdown from its content cache. After editing or removing diagrams, run `npm run mermaid:prune` to drop orphaned SVG cache files.
 
-## 🔄 Updates
+After the first deploy, set your public URL in `src/site.ts` and `astro.config.mjs` so RSS, sitemap, and canonical links are correct.
 
-Run the following commands to sync upstream updates:
+Local equivalent:
 
-```sh
-git remote add theme https://github.com/tuyuritio/astro-theme-thought-lite.git
-git fetch theme
-git merge theme/main    # Add `--allow-unrelated-histories` flag for first update
-npm install
+```bash
+npm run deploy
 ```
 
-## ✍️ Content Creation
+### Other static hosts
 
-Content creation is centralized in the `src/content` directory, mainly including:
+Cloudflare Pages, Vercel, Netlify: build command `npm run build`, output directory `dist/`.
 
-- `note` - Focused on carefully crafted and detailed long-form works
-- `jotting` - Lightweight and immediate content recording
-- `preface` - Displayed on the homepage as the first impression
-- `information` - Containing various descriptive content
+Set the same production URL in `src/site.ts` and `astro.config.mjs` before publishing.
 
-For details, refer to the [Content Creation Guide](src/content/note/en/content.md).
+## Related repos
 
-## 🤝 Contributing
+- **Design system:** [quiet-paper](https://github.com/lifanh/quiet-paper) → npm `@lifanh/quiet-paper`
+- **Learning notes (optional):** your own `my-minimalism` or design journal — not required to run this template
 
-All kinds of contributions are welcome and appreciated!
+## License
 
-- Help promote the project or assist other users
-- Report [issues](https://github.com/tuyuritio/astro-theme-thought-lite/issues) or suggest new features
-- Improve documentation or help with internationalization (i18n)
-- Submit code contributions - see the [Code Contribution Guide](CONTRIBUTING.md) for more details
-
-## 🙏 Acknowledgments
-
-### Tech Stack
-
-- **Core Framework** - [Astro](https://astro.build/)
-- **Core Language** - [TypeScript](https://www.typescriptlang.org/)
-- **UI Components** - [Svelte](https://svelte.dev/)
-- **CSS Engine** - [Tailwind CSS](https://tailwindcss.com/)
-- **Icons** - [Iconify](https://iconify.design/)
-- **Fonts** - [Google Fonts](https://fonts.google.com/) | [ZeoSeven Fonts](https://fonts.zeoseven.com/)
-- **Image Viewer** - [Medium Zoom](https://github.com/francoischalifour/medium-zoom)
-- **SPA Transitions** - [Swup](https://swup.js.org/)
-- **Time Handling** - [Luxon](https://moment.github.io/luxon/)
-- **Code Quality** - [Biome](https://biomejs.dev/)
-- **Static Deployment** - [Vercel](https://vercel.com/)
-
-### Inspiration
-
-- [Astro Sphere](https://github.com/markhorn-dev/astro-sphere)
-- [astro-vitesse](https://github.com/adrian-ub/astro-vitesse)
-- [Miniblog](https://github.com/nicholasdly/miniblog)
-- [AstroPaper with I18n](https://github.com/yousef8/astro-paper-i18n)
-
-## 📜 License
-
-This project is licensed under [GPLv3](LICENSE), allowing free modification and distribution, but the original copyright notice must be retained.
+MIT — fork and replace “Lifan” with your name in `src/site.ts`.

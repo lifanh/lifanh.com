@@ -1,0 +1,47 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { formatPostDate, getPublishedPosts, postPath } from "../../lib/posts";
+import { site } from "../../site";
+
+const posts = await getPublishedPosts();
+---
+
+<BaseLayout
+  title={`Writing · ${site.name}`}
+  description="Notes on quiet interfaces, personal systems, and building with restraint."
+>
+  <section class="max-w-measure" aria-labelledby="writing-title">
+    <h1 id="writing-title" class="m-0 text-2xl leading-tight">Writing</h1>
+    <p class="m-0 mt-5 text-lg leading-relaxed text-muted">
+      Notes on quiet interfaces, personal systems, and building with restraint.
+    </p>
+
+    {
+      posts.length > 0 ? (
+        <ol class="m-0 mt-10 list-none space-y-8 p-0">
+          {posts.map((post) => (
+            <li>
+              <article>
+                <p class="font-ui m-0 text-xs text-muted">
+                  <time datetime={post.data.date.toISOString()}>
+                    {formatPostDate(post.data.date)}
+                  </time>
+                </p>
+                <h2 class="m-0 mt-2 text-xl leading-tight">
+                  <a href={postPath(post)}>{post.data.title}</a>
+                </h2>
+                <p class="m-0 mt-3 text-lg leading-relaxed text-muted">
+                  {post.data.description}
+                </p>
+              </article>
+            </li>
+          ))}
+        </ol>
+      ) : (
+        <p class="m-0 mt-10 text-lg leading-relaxed text-muted">
+          No writing published yet.
+        </p>
+      )
+    }
+  </section>
+</BaseLayout>

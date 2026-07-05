@@ -1,0 +1,107 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+import { formatPostDate, getPublishedPosts, postPath } from "../lib/posts";
+import { site } from "../site";
+
+const recentPosts = (await getPublishedPosts()).slice(0, 3);
+---
+
+<BaseLayout
+  title={site.defaultTitle}
+  description={site.defaultDescription}
+>
+  <section class="max-w-measure" aria-labelledby="page-title">
+    <h1 id="page-title" class="sr-only">Lifan Huang</h1>
+    <p class="m-0 text-lg leading-relaxed">
+      I’m a software engineer building small, practical tools around AI-agent
+      workflows, observability, reusable agent skills, and quiet product
+      interfaces.
+    </p>
+  </section>
+
+  <div class="my-12 h-px w-full bg-border" aria-hidden="true"></div>
+
+  <section
+    id="work"
+    class="max-w-measure"
+    aria-labelledby="work-title"
+  >
+    <h2 id="work-title" class="m-0 mt-12 text-xl leading-tight">Work</h2>
+    <p class="m-0 mt-5 text-lg leading-relaxed">
+      I ship backend systems and APIs; I'm applying the same discipline—tokens,
+      constraints, explicit states—to personal frontends.
+    </p>
+    <ul class="m-0 mt-8 list-none space-y-4 p-0 text-lg leading-relaxed">
+      <li>
+        <a href="https://github.com/lifanh/quiet-paper" rel="noopener noreferrer"
+          >Quiet paper design system</a
+        >
+        <span class="font-ui text-sm text-muted"> — tokens and React primitives</span>
+      </li>
+      <li>
+        <a href="https://github.com/lifanh/astro-quiet-paper" rel="noopener noreferrer"
+          >Astro quiet-paper template</a
+        >
+        <span class="font-ui text-sm text-muted"> — prose-first starter</span>
+      </li>
+      <li>
+        <a href="https://github.com/lifanh/pi-langfuse-extension" rel="noopener noreferrer"
+          >pi-langfuse-extension</a
+        >
+        <span class="font-ui text-sm text-muted"> — observability for Pi Coding Agent runs</span>
+      </li>
+    </ul>
+  </section>
+
+  <section
+    id="writing"
+    class="max-w-measure"
+    aria-labelledby="writing-title"
+  >
+    <h2 id="writing-title" class="m-0 mt-12 text-xl leading-tight">
+      Writing
+    </h2>
+    <p class="m-0 mt-5 text-lg leading-relaxed text-muted">
+      Notes and posts when there is something worth publishing—no feed for its
+      own sake.
+    </p>
+    {
+      recentPosts.length > 0 ? (
+        <ul class="m-0 mt-8 list-none space-y-5 p-0 text-lg leading-relaxed">
+          {recentPosts.map((post) => (
+            <li>
+              <a href={postPath(post)}>{post.data.title}</a>
+              <span class="font-ui text-sm text-muted">
+                {" "}— {formatPostDate(post.data.date)}
+              </span>
+              <p class="m-0 mt-2 text-base leading-relaxed text-muted">
+                {post.data.description}
+              </p>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p class="m-0 mt-8 text-lg leading-relaxed text-muted">
+          No writing published yet.
+        </p>
+      )
+    }
+    <p class="m-0 mt-8 text-lg leading-relaxed">
+      <a href="/writing">All writing →</a>
+    </p>
+  </section>
+
+  <section
+    id="contact"
+    class="max-w-measure"
+    aria-labelledby="contact-title"
+  >
+    <h2 id="contact-title" class="m-0 mt-12 text-xl leading-tight">
+      Contact
+    </h2>
+    <p class="m-0 mt-5 text-lg leading-relaxed">
+      Reach me at <a href="mailto:i@lifanh.com">i@lifanh.com</a>.
+    </p>
+  </section>
+</BaseLayout>

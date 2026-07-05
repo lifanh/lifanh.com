@@ -1,6 +1,7 @@
 {
+  "$schema": "./node_modules/wrangler/config-schema.json",
   "name": "lifanh-com",
-  "compatibility_date": "2025-12-21",
+  "compatibility_date": "2026-07-05",
   "assets": {
     "directory": "./dist"
   },
