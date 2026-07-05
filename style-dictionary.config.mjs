@@ -11,6 +11,20 @@ StyleDictionary.registerFormat({
     const darkColors = [];
     const rootVars = [];
 
+    const formatTokenValue = token => {
+      const value = String(token.value);
+
+      if (token.type === "time") {
+        return value.replace(/(-?\d+\.\d+)s$/, (_, seconds) => `${Number.parseFloat(seconds)}s`);
+      }
+
+      if (token.type === "fontFamily") {
+        return value.replace(/'([^']+)'/g, '"$1"');
+      }
+
+      return value;
+    };
+
     // Extract color names dynamically from tokens
     const colorNames = new Set();
 
@@ -21,17 +35,17 @@ StyleDictionary.registerFormat({
         // Handle light/dark color tokens
         if (token.path[1] === "light") {
           const varName = `--${token.path.slice(2).join("-")}-color-light`;
-          lightColors.push(`  ${varName}: ${token.value};`);
+          lightColors.push(`  ${varName}: ${formatTokenValue(token)};`);
           // Track color names for later use
           colorNames.add(token.path.slice(2).join("-"));
         } else if (token.path[1] === "dark") {
           const varName = `--${token.path.slice(2).join("-")}-color-dark`;
-          darkColors.push(`  ${varName}: ${token.value};`);
+          darkColors.push(`  ${varName}: ${formatTokenValue(token)};`);
         }
       } else {
         // Handle non-color tokens (spacing, radius, shadows, motion, typography)
         const varName = `--${name}`;
-        rootVars.push(`  ${varName}: ${token.value};`);
+        rootVars.push(`  ${varName}: ${formatTokenValue(token)};`);
       }
     });
 

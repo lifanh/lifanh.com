@@ -396,5 +396,32 @@
         text-align: inherit;
       }
     }
+
+    /* Mermaid diagrams */
+    .mermaid-diagram {
+      display: flex;
+      justify-content: center;
+      overflow-x: auto;
+      padding: 1em 0;
+
+      > svg {
+        max-width: 100%;
+        height: auto;
+      }
+
+      /* Show raw source as fallback when rendering fails */
+      > .mermaid-source:not([hidden]) {
+        display: block;
+        width: 100%;
+        padding: 1em;
+        border-radius: 0.3em;
+        background-color: var(--block-color);
+        font-family: var(--font-mono);
+        font-size: 0.8em;
+        line-height: 1.5;
+        overflow-x: auto;
+        white-space: pre-wrap;
+      }
+    }
   }
 }

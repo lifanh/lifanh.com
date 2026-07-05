@@ -1,35 +1,36 @@
 // @ts-check
-import { defineConfig, fontProviders } from "astro/config";
-import yaml from "@rollup/plugin-yaml";
 import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
 import svelte from "@astrojs/svelte";
-import tailwindcss from "@tailwindcss/vite";
+import yaml from "@rollup/plugin-yaml";
 import swup from "@swup/astro";
+import tailwindcss from "@tailwindcss/vite";
+import { defineConfig, fontProviders } from "astro/config";
 
-import GFM from "remark-gfm";
-import ins from "remark-ins";
-import mark from "remark-flexible-markers";
-import spoiler from "@tuyuritio/remark-spoiler";
-import CJK from "remark-cjk-friendly";
-import CJKStrikethrough from "remark-cjk-friendly-gfm-strikethrough";
-import ruby from "@tuyuritio/remark-ruby";
-import attr from "@tuyuritio/remark-attribute";
-import math from "remark-math";
-import gemoji from "remark-gemoji";
-import footnote from "remark-footnotes-extra";
-import abbr from "@tuyuritio/remark-abbreviation";
-import { remarkExtendedTable as table, extendedTableHandlers as tableHandler } from "remark-extended-table";
-import alerts from "@tuyuritio/remark-github-alert";
 import { rehypeHeadingIds as ids, unified } from "@astrojs/markdown-remark";
+import sectionize from "@hbsnow/rehype-sectionize";
+import figure from "@tuyuritio/rehype-image-figure";
+import wrapper from "@tuyuritio/rehype-table-wrapper";
+import abbr from "@tuyuritio/remark-abbreviation";
+import attr from "@tuyuritio/remark-attribute";
+import alerts from "@tuyuritio/remark-github-alert";
+import ruby from "@tuyuritio/remark-ruby";
+import spoiler from "@tuyuritio/remark-spoiler";
+import copy from "@tuyuritio/shiki-code-copy";
 import anchor from "rehype-autolink-headings";
 import links from "rehype-external-links";
 import katex from "rehype-katex";
-import figure from "@tuyuritio/rehype-image-figure";
-import wrapper from "@tuyuritio/rehype-table-wrapper";
-import sectionize from "@hbsnow/rehype-sectionize";
-import copy from "@tuyuritio/shiki-code-copy";
+import CJK from "remark-cjk-friendly";
+import CJKStrikethrough from "remark-cjk-friendly-gfm-strikethrough";
+import { remarkExtendedTable as table, extendedTableHandlers as tableHandler } from "remark-extended-table";
+import mark from "remark-flexible-markers";
+import footnote from "remark-footnotes-extra";
+import gemoji from "remark-gemoji";
+import GFM from "remark-gfm";
+import ins from "remark-ins";
+import math from "remark-math";
 
+import mermaid from "./src/utils/mermaid";
 import reading from "./src/utils/reading";
 
 import siteConfig from "./site.config";
@@ -63,7 +64,8 @@ export default defineConfig({
         abbr,
         [table, { colspanWithEmpty: true }],
         [alerts, { typeFormat: "capitalize" }],
-        reading
+        reading,
+        mermaid
       ],
       remarkRehype: {
         footnoteLabel: null,
