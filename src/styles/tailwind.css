@@ -16,8 +16,9 @@
   --color-selection: var(--selection-color);
 
   /* Font families */
-  --font-serif: var(--font-noto-serif);
-  --font-mono: var(--font-maple-mono-nf-cn);
+  --font-serif: var(--font-newsreader);
+  --font-sans: var(--font-ibm-plex-sans);
+  --font-mono: var(--font-ibm-plex-mono);
   --font-cursive: var(--font-playwrite-mx), var(--font-the-peak-font-plus);
 
   /* Animation keyframes */

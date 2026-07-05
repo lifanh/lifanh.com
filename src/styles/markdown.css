@@ -1,6 +1,6 @@
 @layer components {
   .markdown {
-    line-height: 1.75;
+    line-height: 1.6;
     word-wrap: break-word;
     user-select: text;
 
@@ -8,7 +8,7 @@
     section {
       display: flex;
       flex-direction: column;
-      gap: 0.8em;
+      gap: 1.5em;
       width: 100%;
     }
 
@@ -17,12 +17,10 @@
       align-self: flex-start;
     }
 
-    h1 {
-      border-bottom: 4px solid;
-    }
-
-    h2 {
-      border-bottom: 2px solid;
+    h2,
+    h3,
+    h4 {
+      margin-top: 0.5em;
     }
 
     hr {
@@ -396,6 +394,33 @@
 
       > .katex {
         text-align: inherit;
+      }
+    }
+
+    /* Mermaid diagrams */
+    .mermaid-diagram {
+      display: flex;
+      justify-content: center;
+      overflow-x: auto;
+      padding: 1em 0;
+
+      > svg {
+        max-width: 100%;
+        height: auto;
+      }
+
+      /* Show raw source as fallback when rendering fails */
+      > .mermaid-source:not([hidden]) {
+        display: block;
+        width: 100%;
+        padding: 1em;
+        border-radius: 0.3em;
+        background-color: var(--block-color);
+        font-family: var(--font-mono);
+        font-size: 0.8em;
+        line-height: 1.5;
+        overflow-x: auto;
+        white-space: pre-wrap;
       }
     }
   }

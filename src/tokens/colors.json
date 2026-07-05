@@ -10,7 +10,7 @@
         "type": "color"
       },
       "remark": {
-        "value": "#757575",
+        "value": "#757573",
         "type": "color"
       },
       "weak": {
@@ -22,7 +22,7 @@
         "type": "color"
       },
       "block": {
-        "value": "#eeeeee",
+        "value": "#eeeeec",
         "type": "color"
       },
       "shadow": {
@@ -44,7 +44,7 @@
         "type": "color"
       },
       "remark": {
-        "value": "#a5a5a5",
+        "value": "#a5a5a3",
         "type": "color"
       },
       "weak": {
@@ -56,7 +56,7 @@
         "type": "color"
       },
       "block": {
-        "value": "#1e1e1e",
+        "value": "#1e1e1c",
         "type": "color"
       },
       "shadow": {

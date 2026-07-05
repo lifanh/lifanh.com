@@ -6,11 +6,11 @@
     "useIgnoreFile": true
   },
   "files": {
-    "includes": ["**", "!!**/dist"]
+    "includes": ["**", "!!**/dist", "!**/*.svg"]
   },
   "formatter": {
     "enabled": true,
-    "includes": ["**", "!package.json", "!pnpm-lock.yaml"],
+    "includes": ["**", "!package.json", "!pnpm-lock.yaml", "!**/*.svg"],
     "indentStyle": "space",
     "indentWidth": 2,
     "lineEnding": "lf",

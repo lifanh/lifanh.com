@@ -77,8 +77,8 @@
   }
 
   body {
-    font-size: 1.0625rem;
-    font-family: var(--font-serif), var(--font-mono);
+    font-size: 1.25rem;
+    font-family: var(--font-sans);
     color: var(--primary-color);
     background-color: var(--background-color);
     overflow-x: clip;
@@ -87,7 +87,7 @@
 
   @media screen and (max-width: 640px) {
     body {
-      font-size: 1rem;
+      font-size: 1.125rem;
     }
   }
 
@@ -97,6 +97,7 @@
   h4,
   h5,
   h6 {
+    font-family: var(--font-serif);
     font-weight: bold;
   }
 
@@ -105,7 +106,7 @@
   }
 
   h2 {
-    font-size: 1.75rem;
+    font-size: 1.875rem;
   }
 
   h3 {

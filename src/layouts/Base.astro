@@ -14,8 +14,8 @@ const title = config.title;
 ---
 
 <script>
-	import MediumnZoom, { type Zoom } from "medium-zoom/dist/pure";
 	import Time from "$utils/time";
+	import MediumnZoom, { type Zoom } from "medium-zoom/dist/pure";
 
 	// Set the `title` attribute of all `<time>` elements to localized date-time strings
 	const localizeTimes = () => document.querySelectorAll("time").forEach(time => time.dateTime && (time.title = Time.toLocaleString(time.dateTime, navigator.language, true)));
@@ -27,10 +27,96 @@ const title = config.title;
 		zoom.attach(".markdown img:not([data-nozoom])");
 	};
 
+	// --- Mermaid diagram rendering (lazy-loaded) ---
+	type MermaidAPI = typeof import("mermaid").default;
+	let mermaidModule: MermaidAPI | null = null;
+	let currentTheme: string | null = null;
+	let renderVersion = 0;
+	let renderQueue = Promise.resolve();
+	let themeObserverSetup = false;
+
+	function escapeHtml(source: string) {
+		return source.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+	}
+
+	function getMermaidTheme() {
+		return document.documentElement.dataset.theme === "dark" ? "dark" : "default";
+	}
+
+	function getMermaidSource(diagram: HTMLElement) {
+		return diagram.querySelector<HTMLElement>(".mermaid-source")?.textContent ?? "";
+	}
+
+	function showMermaidSource(diagram: HTMLElement, source = getMermaidSource(diagram)) {
+		diagram.innerHTML = `<pre class="mermaid-source">${escapeHtml(source)}</pre>`;
+		delete diagram.dataset.renderedTheme;
+	}
+
+	async function renderMermaidNow(version: number) {
+		const diagrams = document.querySelectorAll<HTMLElement>(".mermaid-diagram");
+		if (!diagrams.length) return;
+
+		try {
+			if (!mermaidModule) {
+				mermaidModule = (await import("mermaid")).default;
+			}
+		} catch (err) {
+			if (version === renderVersion) {
+				diagrams.forEach(diagram => showMermaidSource(diagram));
+				console.error("Mermaid load error:", err);
+			}
+			return;
+		}
+
+		if (version !== renderVersion) return;
+
+		const theme = getMermaidTheme();
+		if (currentTheme !== theme) {
+			mermaidModule.initialize({ startOnLoad: false, theme });
+			currentTheme = theme;
+		}
+
+		for (const [index, diagram] of diagrams.entries()) {
+			if (version !== renderVersion || theme !== getMermaidTheme()) return;
+			if (diagram.dataset.renderedTheme === theme) continue;
+
+			const source = getMermaidSource(diagram);
+			if (!source) continue;
+
+			try {
+				const id = `mermaid-${version}-${index}`;
+				const { svg } = await mermaidModule.render(id, source);
+				if (version !== renderVersion || theme !== getMermaidTheme()) return;
+				diagram.innerHTML = `<pre class="mermaid-source" hidden>${escapeHtml(source)}</pre>${svg}`;
+				diagram.dataset.renderedTheme = theme;
+			} catch (err) {
+				if (version !== renderVersion || theme !== getMermaidTheme()) return;
+				showMermaidSource(diagram, source);
+				console.error("Mermaid render error:", err);
+			}
+		}
+	}
+
+	function renderMermaid() {
+		const version = ++renderVersion;
+		renderQueue = renderQueue.then(() => renderMermaidNow(version), () => renderMermaidNow(version)).catch(err => console.error("Mermaid render error:", err));
+	}
+
+	function setupThemeObserver() {
+		if (themeObserverSetup) return;
+		themeObserverSetup = true;
+		new MutationObserver(() => renderMermaid()).observe(document.documentElement, {
+			attributes: true,
+			attributeFilter: ["data-theme"]
+		});
+	}
+
 	// Page initialization function
 	function initialize() {
 		localizeTimes();
 		window.zoom();
+		renderMermaid();
+		setupThemeObserver();
 	}
 
 	// Execute initialization on first load
