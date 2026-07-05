@@ -1,0 +1,38 @@
+---
+import { primaryNav, site } from "../site";
+
+/** Shared horizontal padding + max width with main/footer */
+const shell =
+  "mx-auto w-full max-w-[min(var(--measure-wide),calc(100%-var(--space-6)*2))] max-[720px]:max-w-[min(calc(100%-var(--space-4)*2),var(--measure-wide))]";
+
+const currentPath = Astro.url.pathname.replace(/\/$/, "") || "/";
+
+function isCurrentPage(href: string) {
+  const itemPath = href.replace(/\/$/, "") || "/";
+
+  return currentPath === itemPath || currentPath.startsWith(`${itemPath}/`);
+}
+---
+
+<header
+  class={`${shell} flex items-center justify-between gap-4 border-b border-border-subtle py-6 font-ui text-sm max-[720px]:flex-col max-[720px]:items-start`}
+>
+  <a
+    class="font-semibold tracking-[0.01em] text-text no-underline"
+    href="/"
+  >
+    {site.name}
+  </a>
+  <nav
+    class="flex flex-wrap gap-4 text-muted [&_a]:text-inherit [&_a]:no-underline [&_a:hover]:text-text"
+    aria-label="Primary navigation"
+  >
+    {
+      primaryNav.map((item) => (
+        <a href={item.href} aria-current={isCurrentPage(item.href) ? "page" : undefined}>
+          {item.label}
+        </a>
+      ))
+    }
+  </nav>
+</header>

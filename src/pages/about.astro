@@ -1,0 +1,26 @@
+---
+import { Prose } from "@lifanh/quiet-paper";
+import { getEntry, render } from "astro:content";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { site } from "../site";
+
+const about = await getEntry("pages", "about");
+
+if (!about) {
+  throw new Error("Missing src/content/pages/about.md");
+}
+
+const { Content } = await render(about);
+---
+
+<BaseLayout
+  title={`${about.data.title} · ${site.name}`}
+  description={about.data.description}
+>
+  <article class="max-w-measure">
+    <h1 class="m-0 text-2xl leading-tight">{about.data.title}</h1>
+    <Prose className="mt-5 text-lg leading-relaxed">
+      <Content />
+    </Prose>
+  </article>
+</BaseLayout>

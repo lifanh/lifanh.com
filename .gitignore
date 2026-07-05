@@ -1,12 +1,7 @@
 # build output
-.wrangler
-.vercel/
 dist/
-
 # generated types
 .astro/
-.vscode/count
-/worker-configuration.d.ts
 
 # dependencies
 node_modules/
@@ -17,18 +12,10 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 
-# lock files
-package-lock.json
-yarn.lock
-
-# TODO files
-todo*
 
 # environment variables
 .env
-.env.*
-!.env.example
-wrangler.toml
+.env.production
 
 # macOS-specific files
 .DS_Store
@@ -36,10 +23,6 @@ wrangler.toml
 # jetbrains setting folder
 .idea/
 
-# local workspace and tutorial files
-MISSION.md
-NOTES.md
-RESOURCES.md
-learning-records/
-lessons/
-reference/
+# editor settings
+.vscode/
+.zed/

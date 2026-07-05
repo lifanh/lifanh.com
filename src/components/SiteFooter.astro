@@ -1,0 +1,15 @@
+---
+import { site } from "../site";
+
+const shell =
+  "mx-auto w-full max-w-[min(var(--measure-wide),calc(100%-var(--space-6)*2))] max-[720px]:max-w-[min(calc(100%-var(--space-4)*2),var(--measure-wide))]";
+const year = new Date().getFullYear();
+---
+
+<footer
+  class={`${shell} mt-16 border-t border-border-subtle py-8 font-ui text-xs text-muted`}
+>
+  <p class="m-0">
+    © {year} {site.name}. Quiet paper.
+  </p>
+</footer>
