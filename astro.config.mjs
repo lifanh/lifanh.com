@@ -12,7 +12,7 @@ export default defineConfig({
   integrations: [
     react(),
     sitemap({
-      filter: (page) => new URL(page).pathname !== '/demo/',
+      filter: (page) => new URL(page).pathname.replace(/\/+$/, '') !== '/demo',
     }),
   ],
   markdown: {
