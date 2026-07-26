@@ -1,22 +1,21 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-readonly NODE_VERSION="22.17.0"
+readonly NODE_VERSION="24.18.0"
+case "$(uname -m)" in
+  x86_64) readonly NODE_ARCH="x64" ;;
+  aarch64|arm64) readonly NODE_ARCH="arm64" ;;
+  *)
+    echo "Unsupported architecture for Node.js: $(uname -m)" >&2
+    exit 1
+    ;;
+esac
 
 install_node() {
-  local arch node_arch archive temp_dir
+  local archive install_dir temp_dir
 
-  arch="$(uname -m)"
-  case "$arch" in
-    x86_64) node_arch="x64" ;;
-    aarch64|arm64) node_arch="arm64" ;;
-    *)
-      echo "Unsupported architecture for Node.js: $arch" >&2
-      return 1
-      ;;
-  esac
-
-  archive="node-v${NODE_VERSION}-linux-${node_arch}.tar.xz"
+  archive="node-v${NODE_VERSION}-linux-${NODE_ARCH}.tar.xz"
+  install_dir="/opt/${archive%.tar.xz}"
   temp_dir="$(mktemp -d)"
   trap 'rm -rf -- "$temp_dir"' RETURN
 
@@ -31,11 +30,17 @@ install_node() {
     cd "$temp_dir"
     grep "  ${archive}$" SHASUMS256.txt | sha256sum --check --strict -
   )
-  sudo tar --extract --file "${temp_dir}/${archive}" --directory /usr/local \
-    --strip-components=1
+  sudo rm -rf -- "$install_dir"
+  sudo tar --extract --file "${temp_dir}/${archive}" --directory /opt
+  for executable in node npm npx corepack; do
+    sudo ln --symbolic --force "${install_dir}/bin/${executable}" \
+      "/usr/local/bin/${executable}"
+  done
 }
 
-if [[ "$(node --version 2>/dev/null || true)" != "v${NODE_VERSION}" ]]; then
+expected_node="/opt/node-v${NODE_VERSION}-linux-${NODE_ARCH}/bin/node"
+if [[ "$(node --version 2>/dev/null || true)" != "v${NODE_VERSION}" ]] ||
+  [[ "$(readlink -f "$(command -v node 2>/dev/null || echo /nonexistent)")" != "$expected_node" ]]; then
   install_node
 fi
 
