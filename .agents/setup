@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+readonly NODE_VERSION="22.17.0"
+
+install_node() {
+  local arch node_arch archive temp_dir
+
+  arch="$(uname -m)"
+  case "$arch" in
+    x86_64) node_arch="x64" ;;
+    aarch64|arm64) node_arch="arm64" ;;
+    *)
+      echo "Unsupported architecture for Node.js: $arch" >&2
+      return 1
+      ;;
+  esac
+
+  archive="node-v${NODE_VERSION}-linux-${node_arch}.tar.xz"
+  temp_dir="$(mktemp -d)"
+  trap 'rm -rf -- "$temp_dir"' RETURN
+
+  echo "Installing Node.js v${NODE_VERSION}..."
+  curl --fail --location --silent --show-error \
+    "https://nodejs.org/dist/v${NODE_VERSION}/${archive}" \
+    --output "${temp_dir}/${archive}"
+  curl --fail --location --silent --show-error \
+    "https://nodejs.org/dist/v${NODE_VERSION}/SHASUMS256.txt" \
+    --output "${temp_dir}/SHASUMS256.txt"
+  (
+    cd "$temp_dir"
+    grep "  ${archive}$" SHASUMS256.txt | sha256sum --check --strict -
+  )
+  sudo tar --extract --file "${temp_dir}/${archive}" --directory /usr/local \
+    --strip-components=1
+}
+
+if [[ "$(node --version 2>/dev/null || true)" != "v${NODE_VERSION}" ]]; then
+  install_node
+fi
+
+hash -r
+echo "Using $(node --version) and npm $(npm --version)."
+echo "Installing dependencies from package-lock.json..."
+npm ci
+
+echo "Orb setup complete."

@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# This static Astro site has no stateful services or tunnels to repair on wake.
+echo "No orb wake repairs required."
