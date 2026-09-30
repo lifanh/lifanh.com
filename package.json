@@ -61,7 +61,7 @@
     "puppeteer": "^25.3.0",
     "satteri": "^0.9.4",
     "typescript": "^6.0.3",
-    "wrangler": "^4.0.0"
+    "wrangler": "^4.145.0"
   },
   "allowScripts": {
     "puppeteer@25.3.0": true,
